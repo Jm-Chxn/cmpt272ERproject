@@ -48,7 +48,7 @@ const LeafletMap = () => {
 					key={location.id}
 					position={[location.location.lat, location.location.lng]}
 				>
-					<Popup>
+					<Popup autoPan={false}>
 						<strong>{location.location.place}</strong>
 						<br />
 						{location.emergencyType}
