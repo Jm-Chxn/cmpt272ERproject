@@ -4,13 +4,7 @@
   padding: 2rem;
   text-align: center;
 }
-/* In your CSS file */
-.leaflet-default-icon-path {
-  background-image: url(https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png);
-}
-.leaflet-default-shadow-path {
-  background-image: url(https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png);
-}
+
 .logo {
   height: 6em;
   padding: 1.5em;
