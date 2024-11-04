@@ -1,5 +1,4 @@
 import { useMap, MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import type { LatLngBounds } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
 import { useLocations, type EmergencyLocation } from "../hooks/locations.ts";
@@ -31,7 +30,7 @@ const MapController = () => {
 
 const LeafletMap = () => {
 	const { center, zoom } = useViewCoordinates();
-	const { locations, viewableLocations } = useLocations();
+	const { locations } = useLocations();
 
 	return (
 		<MapContainer
