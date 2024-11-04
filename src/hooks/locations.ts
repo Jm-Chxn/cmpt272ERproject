@@ -7,14 +7,13 @@ const isInBounds = (
 	bounds: LatLngBounds,
 ): boolean => {
 	return (
-		// Terrible, but it works
-		// @ts-ignore 
+		// @ts-ignore its actually a json object
 		location.location.lat >= bounds._southWest.lat &&
-		// @ts-ignore
+		// @ts-ignore its actually a json object
 		location.location.lat <= bounds._northEast.lat &&
-		// @ts-ignore
+		// @ts-ignore its actually a json object
 		location.location.lng >= bounds._southWest.lng &&
-		// @ts-ignore
+		// @ts-ignore its actually a json object
 		location.location.lng <= bounds._northEast.lng
 	);
 };
