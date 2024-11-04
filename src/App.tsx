@@ -10,7 +10,7 @@ import {
 
 function App() {
 	const [count, setCount] = useState(0);
-	const { locations, addLocation } = useLocations();
+	const { addLocation, removeLocation, locations } = useLocations();
 
 	return (
 		<>
@@ -21,13 +21,19 @@ function App() {
 			>
 				Add Random
 			</button>
+			<button
+				onClick={() =>
+					removeLocation(
+						locations[Math.floor(Math.random() * locations.length)],
+					)
+				}
+				type="button"
+			>
+				Remove Random
+			</button>
 			<div>
-				<a href="https://vite.dev" target="_blank" rel="noreferrer">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://react.dev" target="_blank" rel="noreferrer">
-					<img src={reactLogo} className="logo react" alt="React logo" />
-				</a>
+				<img src={viteLogo} className="logo" alt="Vite logo" />
+				<img src={reactLogo} className="logo react" alt="React logo" />
 			</div>
 			<h1>Vite + React</h1>
 			<div className="card">
