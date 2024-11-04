@@ -1,5 +1,4 @@
 import { useMap, MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
 import { useLocations, type EmergencyLocation } from "../hooks/locations.ts";
 import { useViewCoordinates } from "../hooks/viewCoordinates.ts";
