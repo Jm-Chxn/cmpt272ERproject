@@ -5,23 +5,6 @@ import { useEffect } from "react";
 import { useLocations, type EmergencyLocation } from "../hooks/locations.ts";
 import { useViewCoordinates } from "../hooks/viewCoordinates.ts";
 
-const isInBounds = (
-	location: EmergencyLocation,
-	bounds: LatLngBounds,
-): boolean => {
-	return (
-		// Terrible, but it works
-		// @ts-ignore
-		location.location.lat >= bounds._southWest.lat &&
-		// @ts-ignore
-		location.location.lat <= bounds._northEast.lat &&
-		// @ts-ignore
-		location.location.lng >= bounds._southWest.lng &&
-		// @ts-ignore
-		location.location.lng <= bounds._northEast.lng
-	);
-};
-
 const MapController = () => {
 	const map = useMap();
 	const { setZoom, setBounds, setCenter } = useViewCoordinates();
@@ -47,8 +30,8 @@ const MapController = () => {
 };
 
 const LeafletMap = () => {
-	const { center, bounds, zoom } = useViewCoordinates();
-	const { locations } = useLocations();
+	const { center, zoom } = useViewCoordinates();
+	const { locations, viewableLocations } = useLocations();
 
 	return (
 		<MapContainer
@@ -62,17 +45,18 @@ const LeafletMap = () => {
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			{locations.map(
-				(location: EmergencyLocation) =>
-					isInBounds(location, bounds) && (
-						<Marker
-							key={location.id}
-							position={[location.location.lat, location.location.lng]}
-						>
-							<Popup>{location.comment}</Popup>
-						</Marker>
-					),
-			)}
+			{locations.map((location: EmergencyLocation) => (
+				<Marker
+					key={location.id}
+					position={[location.location.lat, location.location.lng]}
+				>
+					<Popup>
+						<strong>{location.location.place}</strong>
+						<br />
+						{location.emergencyType}
+					</Popup>
+				</Marker>
+			))}
 		</MapContainer>
 	);
 };

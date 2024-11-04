@@ -1,4 +1,23 @@
 import { useLocalStorage } from "usehooks-ts";
+import { useViewCoordinates } from "./viewCoordinates.ts";
+import type { LatLngBounds } from "leaflet";
+
+const isInBounds = (
+	location: EmergencyLocation,
+	bounds: LatLngBounds,
+): boolean => {
+	return (
+		// Terrible, but it works
+		// @ts-ignore 
+		location.location.lat >= bounds._southWest.lat &&
+		// @ts-ignore
+		location.location.lat <= bounds._northEast.lat &&
+		// @ts-ignore
+		location.location.lng >= bounds._southWest.lng &&
+		// @ts-ignore
+		location.location.lng <= bounds._northEast.lng
+	);
+};
 
 export interface EmergencyLocation {
 	id: string; // unique id for the location
@@ -17,43 +36,6 @@ export interface EmergencyLocation {
 	time: number; // unix timestamp of when the report was lodged
 	status: "OPEN" | "RESOLVED"; // Initially set to "OPEN"
 }
-
-const initialLocations: EmergencyLocation[] = [
-	{
-		id: "1",
-		witness: {
-			name: "John Doe",
-			phoneNumber: "555-555-5555",
-		},
-		emergencyType: "fire",
-		location: {
-			place: "Vancouver",
-			lat: 49.2827,
-			lng: -123.1207,
-		},
-		pictureLink: "https://picsum.photos/200/300",
-		comment: "The fire was intentional.",
-		time: 1677721600,
-		status: "OPEN",
-	},
-	{
-		id: "2",
-		witness: {
-			name: "Jane Doe",
-			phoneNumber: "555-555-5555",
-		},
-		emergencyType: "shooting",
-		location: {
-			place: "Burnaby",
-			lat: 49.2500,
-			lng: -122.9000,
-		},
-		pictureLink: "https://picsum.photos/200/300",
-		comment: "The shooter was a police officer.",
-		time: 1677721600,
-		status: "OPEN",
-	},
-];
 
 export const generateRandomEmergencyLocation = (): EmergencyLocation => {
 	const randomEmergencyType = ["fire", "shooting", "medical", "other"];
@@ -85,6 +67,8 @@ export const useLocations = () => {
 		[],
 	);
 
+  const { bounds } = useViewCoordinates();
+
 	const removeLocation = (oldLocation: EmergencyLocation) => {
 		const newLocations = locations.filter(
 			(loc) => loc.id !== oldLocation.id,
@@ -96,5 +80,9 @@ export const useLocations = () => {
 		setLocations([...locations, newLocation]);
 	};
 
-	return { locations, removeLocation, addLocation };
+  const viewableLocations = locations.filter((loc) =>
+    isInBounds(loc, bounds),
+  );
+
+	return { locations, viewableLocations, removeLocation, addLocation };
 };
