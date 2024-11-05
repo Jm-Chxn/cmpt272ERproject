@@ -1,11 +1,25 @@
 import { useMap, MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocations, type EmergencyLocation } from "../hooks/locations.ts";
 import { useViewCoordinates } from "../hooks/viewCoordinates.ts";
 
-const MapController = () => {
+const MapController = ({ markerRefs, mapRef }) => {
 	const map = useMap();
 	const { setZoom, setBounds, setCenter } = useViewCoordinates();
+
+	// Function to open popup and pan to location
+	const showLocation = (locationId: string) => {
+		const marker = markerRefs.current[locationId];
+		if (marker) {
+			const map = mapRef.current;
+      if (map) {
+				// Pan to the marker location
+				map.flyTo(marker.getLatLng(), map.getZoom());
+				// Open the popup
+				marker.openPopup();
+			}
+		}
+	};
 
 	useEffect(() => {
 		const updateMapInfo = () => {
@@ -30,6 +44,8 @@ const MapController = () => {
 const LeafletMap = () => {
 	const { center, zoom } = useViewCoordinates();
 	const { locations } = useLocations();
+	const markerRefs = useRef({});
+	const mapRef = useRef(null);
 
 	return (
 		<MapContainer
@@ -37,8 +53,9 @@ const LeafletMap = () => {
 			zoom={zoom}
 			scrollWheelZoom={true}
 			style={{ height: "50vh", width: "full" }}
+			ref={mapRef}
 		>
-			<MapController />
+			<MapController markerRefs={markerRefs} mapRef={mapRef} />
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -47,6 +64,11 @@ const LeafletMap = () => {
 				<Marker
 					key={location.id}
 					position={[location.location.lat, location.location.lng]}
+					ref={(ref) => {
+						if (ref) {
+							markerRefs.current[location.id] = ref;
+						}
+					}}
 				>
 					<Popup autoPan={false}>
 						<strong>{location.location.place}</strong>
