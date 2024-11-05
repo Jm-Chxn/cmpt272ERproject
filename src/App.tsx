@@ -2,7 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import LeafletMap from "./components/LeafletMap";
+import LeafletMap, { focusMarker } from "./components/LeafletMap";
 import {
 	generateRandomEmergencyLocation,
 	useLocations,
@@ -30,6 +30,18 @@ function App() {
 				type="button"
 			>
 				Remove Random
+			</button>
+			<button
+				onClick={() => {
+					if (locations.length === 0) return;
+					const marker =
+						locations[Math.floor(Math.random() * locations.length)];
+
+					focusMarker(marker.id, marker.location.lat, marker.location.lng);
+				}}
+				type="button"
+			>
+				Focus Random
 			</button>
 			<div>
 				<img src={viteLogo} className="logo" alt="Vite logo" />
