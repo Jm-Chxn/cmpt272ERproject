@@ -36,7 +36,7 @@ const LeafletMap = () => {
 			center={center}
 			zoom={zoom}
 			scrollWheelZoom={true}
-			style={{ height: "50vh", width: "full" }}
+			style={{ height: "50vh", width: "150vh" }}
 		>
 			<MapController />
 			<TileLayer

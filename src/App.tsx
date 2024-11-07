@@ -1,54 +1,50 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import LeafletMap from "./components/LeafletMap";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Terminal } from "lucide-react"
+
 import {
-	generateRandomEmergencyLocation,
-	useLocations,
+  generateRandomEmergencyLocation,
+  useLocations,
 } from "./hooks/locations";
 
 function App() {
-	const [count, setCount] = useState(0);
-	const { addLocation, removeLocation, locations } = useLocations();
+  const [count, setCount] = useState(0);
+  const { addLocation, removeLocation, locations } = useLocations();
 
-	return (
-		<>
-			<LeafletMap />
-			<button
-				onClick={() => addLocation(generateRandomEmergencyLocation())}
-				type="button"
-			>
-				Add Random
-			</button>
-			<button
-				onClick={() =>
-					removeLocation(
-						locations[Math.floor(Math.random() * locations.length)],
-					)
-				}
-				type="button"
-			>
-				Remove Random
-			</button>
-			<div>
-				<img src={viteLogo} className="logo" alt="Vite logo" />
-				<img src={reactLogo} className="logo react" alt="React logo" />
-			</div>
-			<h1>Vite + React</h1>
-			<div className="card">
-				<button onClick={() => setCount((count) => count + 1)} type="button">
-					count is {count}
-				</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
-		</>
-	);
+  return (
+    <>
+      <LeafletMap />
+      <button
+        onClick={() => addLocation(generateRandomEmergencyLocation())}
+        type="button"
+      >
+        Add Random
+      </button>
+      <button
+        onClick={() =>
+          removeLocation(
+            locations[Math.floor(Math.random() * locations.length)]
+          )
+        }
+        type="button"
+      >
+        Remove Random
+      </button>
+      
+    <div className="alert-container">
+		<Alert className="alert">
+			<Terminal className="h-4 w-4" />
+			<AlertTitle>Location Update</AlertTitle>
+			<AlertDescription>
+			Current number of emergency locations: {locations.length}
+			</AlertDescription>
+		</Alert>
+	</div>
+
+    </>
+  );
 }
 
 export default App;
