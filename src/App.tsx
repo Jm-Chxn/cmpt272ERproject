@@ -7,6 +7,7 @@ import {
 	CardTitle,
   } from "@/components/ui/card"
 import { DataTable } from "./components/ui/data-table";
+import {ScrollArea} from "./components/ui/scroll-area";
 import {
   generateRandomEmergencyLocation,
   useLocations,
@@ -73,38 +74,40 @@ function App() {
 							<CardTitle className="text-xl font-bold">Emergency Reports</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<DataTable
-							// Temporarily hardcoded since columns.tsx is not working
-								columns={[
-									{ accessorKey: "location.place", header: "Location" },
-									{ accessorKey: "emergencyType", header: "Type" },
-									{ accessorKey: "time", header: "Time Reported" },
-									{ accessorKey: "status", header: "Status" },
-								]}
-								data={viewableLocations}
-							/>
+							<ScrollArea className="h-[19.75rem] overflow-y-auto">
+								<DataTable
+								// Temporarily hardcoded since columns.tsx is not working
+									columns={[
+										{ accessorKey: "location.place", header: "Location" },
+										{ accessorKey: "emergencyType", header: "Type" },
+										{ accessorKey: "time", header: "Time Reported" },
+										{ accessorKey: "status", header: "Status" },
+									]}
+									data={viewableLocations}
+								/>
+							</ScrollArea>
 						</CardContent>
 					</Card>
 				
 				</div>
-				
-				<button
-					onClick={() => addLocation(generateRandomEmergencyLocation())}
-					type="button"
-				>
-					Add Random
-				</button>
-				<button
-					onClick={() =>
-					removeLocation(
-						locations[Math.floor(Math.random() * locations.length)]
-					)
-					}
-					type="button"
-				>
-					Remove Random
-				</button>
-			
+				<div className="flex-1 space-x-2">
+					<button
+						onClick={() => addLocation(generateRandomEmergencyLocation())}
+						type="button"
+					>
+						Add Random
+					</button>
+					<button
+						onClick={() =>
+						removeLocation(
+							locations[Math.floor(Math.random() * locations.length)]
+						)
+						}
+						type="button"
+					>
+						Remove Random
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
