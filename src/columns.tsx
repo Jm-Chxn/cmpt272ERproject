@@ -1,25 +1,20 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import { EmergencyLocation } from "./hooks/locations"
 
-export type Emergency = {
-  loc: string
-  emergency_type: string
-  report_time: string
-  status: "OPEN" | "RESOLVED"
-}
 
-export const columns: ColumnDef<Emergency>[] = [
+export const columns: ColumnDef<EmergencyLocation>[] = [
   {
-    accessorKey: "loc",
+    accessorKey: "location.place",
     header: "Location",
   },
   {
-    accessorKey: "emergency_type",
+    accessorKey: "emergencyType",
     header: "Type",
   },
   {
-    accessorKey: "report_time",
+    accessorKey: "time",
     header: "Time Reported",
   },
   {

@@ -58,7 +58,7 @@ export const generateRandomEmergencyLocation = (): EmergencyLocation => {
 		time: Date.now(),
 		status: "OPEN",
 	};
-}
+};
 
 export const useLocations = () => {
 	const [locations, setLocations] = useLocalStorage<EmergencyLocation[]>(
@@ -66,12 +66,10 @@ export const useLocations = () => {
 		[],
 	);
 
-  const { bounds } = useViewCoordinates();
+	const { bounds } = useViewCoordinates();
 
 	const removeLocation = (oldLocation: EmergencyLocation) => {
-		const newLocations = locations.filter(
-			(loc) => loc.id !== oldLocation.id,
-		);
+		const newLocations = locations.filter((loc) => loc.id !== oldLocation.id);
 		setLocations(newLocations);
 	};
 
@@ -79,19 +77,21 @@ export const useLocations = () => {
 		setLocations([...locations, newLocation]);
 	};
 
-  const viewableLocations = locations.filter((loc) =>
-    isInBounds(loc, bounds),
-  );
+	const viewableLocations = locations.filter((loc) => isInBounds(loc, bounds));
 
-  	const getTodaysEmergenciesCount = () => {
+	const getTodaysEmergenciesCount = () => {
 		const startOfToday = new Date();
 		startOfToday.setHours(0, 0, 0, 0);
 		const startOfTodayTimestamp = startOfToday.getTime();
 
-		return locations.filter(
-			(loc) => loc.time >= startOfTodayTimestamp
-		).length;
+		return locations.filter((loc) => loc.time >= startOfTodayTimestamp).length;
 	};
 
-	return { locations, viewableLocations, removeLocation, addLocation, getTodaysEmergenciesCount};
+	return {
+		locations,
+		viewableLocations,
+		removeLocation,
+		addLocation,
+		getTodaysEmergenciesCount,
+	};
 };

@@ -33,9 +33,9 @@ function getData(): Emergency[] {
 	  },
 	];
 }
+
 function App() {
-  const [count, setCount] = useState(0);
-  const { addLocation, removeLocation, locations, getTodaysEmergenciesCount } = useLocations();
+  const { addLocation, removeLocation, locations, viewableLocations, getTodaysEmergenciesCount } = useLocations();
   const openEmergenciesCount = locations.filter((loc) => loc.status === "OPEN").length;
   const resolvedEmergenciesCount = locations.filter((loc) => loc.status === "RESOLVED").length;
   return (
@@ -97,12 +97,12 @@ function App() {
 							<DataTable
 							// Temporarily hardcoded since columns.tsx is not working
 								columns={[
-									{ accessorKey: "loc", header: "Location" },
-									{ accessorKey: "emergency_type", header: "Type" },
-									{ accessorKey: "report_time", header: "Time Reported" },
+									{ accessorKey: "location.place", header: "Location" },
+									{ accessorKey: "emergencyType", header: "Type" },
+									{ accessorKey: "time", header: "Time Reported" },
 									{ accessorKey: "status", header: "Status" },
 								]}
-								data={getData()}
+								data={viewableLocations}
 							/>
 						</CardContent>
 					</Card>

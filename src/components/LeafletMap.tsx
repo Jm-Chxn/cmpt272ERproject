@@ -33,33 +33,34 @@ const LeafletMap = () => {
 
 	return (
 		<div className="map-container">
-		<MapContainer 
-			center={center}
-			zoom={zoom}
-			scrollWheelZoom={true}
-			style={{
-				height: "50vh",
-				width: "100vh",
-				display: "block"
-			}}
-		>
-			<MapController />
-			<TileLayer
-				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-			/>
-			{locations.map((location: EmergencyLocation) => (
-				<Marker
-					key={location.id}
-					position={[location.location.lat, location.location.lng]}
-				>
-					<Popup>
-						<div className="text-xl font-bold">{location.location.place}</div>
-						<div className="text-lg">{location.emergencyType}</div>
-					</Popup>
-				</Marker>
-			))}
-		</MapContainer>
+			<MapContainer
+				center={center}
+				zoom={zoom}
+				scrollWheelZoom={true}
+				style={{
+					height: "50vh",
+					width: "100vh",
+					display: "block",
+					borderRadius: "var(--radius)",
+				}}
+			>
+				<MapController />
+				<TileLayer
+					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+				/>
+				{locations.map((location: EmergencyLocation) => (
+					<Marker
+						key={location.id}
+						position={[location.location.lat, location.location.lng]}
+					>
+						<Popup>
+							<div className="text-xl font-bold">{location.location.place}</div>
+							<div className="text-lg">{location.emergencyType}</div>
+						</Popup>
+					</Marker>
+				))}
+			</MapContainer>
 		</div>
 	);
 };
