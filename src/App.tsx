@@ -1,38 +1,17 @@
-import { useState } from "react";
 import "./App.css";
 import LeafletMap from "./components/LeafletMap";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardHeader,
 	CardTitle,
   } from "@/components/ui/card"
-import { Emergency, columns } from "./columns";
 import { DataTable } from "./components/ui/data-table";
 import {
   generateRandomEmergencyLocation,
   useLocations,
 } from "./hooks/locations";
 
-
-function getData(): Emergency[] {
-	// Temporarily hardcoding data for now
-	return [
-		{
-		loc: "123 Main St",
-		emergency_type: "Fire",
-		report_time: "12:34 PM",
-		status: "OPEN",
-	  },
-	  {
-		loc: "456 Elm St",
-		emergency_type: "Medical",
-		report_time: "1:45 PM",
-		status: "OPEN",
-	  },
-	];
-}
 
 function App() {
   const { addLocation, removeLocation, locations, viewableLocations, getTodaysEmergenciesCount } = useLocations();
