@@ -83,5 +83,15 @@ export const useLocations = () => {
     isInBounds(loc, bounds),
   );
 
-	return { locations, viewableLocations, removeLocation, addLocation };
+  	const getTodaysEmergenciesCount = () => {
+		const startOfToday = new Date();
+		startOfToday.setHours(0, 0, 0, 0);
+		const startOfTodayTimestamp = startOfToday.getTime();
+
+		return locations.filter(
+			(loc) => loc.time >= startOfTodayTimestamp
+		).length;
+	};
+
+	return { locations, viewableLocations, removeLocation, addLocation, getTodaysEmergenciesCount};
 };

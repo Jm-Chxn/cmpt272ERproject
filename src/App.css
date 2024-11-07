@@ -58,3 +58,9 @@
   align-items: center;
   
 }
+
+.map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

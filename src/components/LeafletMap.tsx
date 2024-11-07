@@ -32,11 +32,17 @@ const LeafletMap = () => {
 	const { locations } = useLocations();
 
 	return (
-		<MapContainer
+		<div className="map-container">
+		<MapContainer 
 			center={center}
 			zoom={zoom}
 			scrollWheelZoom={true}
-			style={{ height: "50vh", width: "150vh" }}
+			style={{
+				height: "50vh",
+				width: "150vh",
+				margin: "0 auto",
+				display: "block"
+			}}
 		>
 			<MapController />
 			<TileLayer
@@ -56,6 +62,7 @@ const LeafletMap = () => {
 				</Marker>
 			))}
 		</MapContainer>
+		</div>
 	);
 };
 
