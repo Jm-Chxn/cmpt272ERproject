@@ -33,12 +33,26 @@ export interface EmergencyLocation {
 	pictureLink: string; // An optional URL to an image of the emergency.
 	comment: string; //  Additional details, such as "suspect is wearing cargo shorts with green t-shirt"
 	time: number; // unix timestamp of when the report was lodged
+	formattedTime?: string;
 	status: "OPEN" | "RESOLVED"; // Initially set to "OPEN"
 }
+
+const formatTime = (unixTime: number): string => {
+	const date = new Date(unixTime);
+	return date.toLocaleString("en-US", {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		hour12: true,
+	});
+};
 
 export const generateRandomEmergencyLocation = (): EmergencyLocation => {
 	const randomEmergencyType = ["Fire", "Shooting", "Medical", "Other"];
 	const randomLocation = ["Vancouver", "Burnaby", "Richmond"];
+	const currentTime = Date.now();
 
 	return {
 		id: Math.random().toString(36).substring(2, 15),
@@ -55,7 +69,8 @@ export const generateRandomEmergencyLocation = (): EmergencyLocation => {
 		pictureLink:
 			"https://akns-images.eonline.com/eol_images/Entire_Site/201363/rs_1024x759-130703124141-1024.Gru.mh.070313.jpg?fit=around%7C1024:759&output-quality=90&crop=1024:759;center,top",
 		comment: `comment: ${Math.random().toString(36).substring(2, 5)}`,
-		time: Date.now(),
+		time: currentTime,
+		formattedTime: formatTime(currentTime),
 		status: "OPEN",
 	};
 };

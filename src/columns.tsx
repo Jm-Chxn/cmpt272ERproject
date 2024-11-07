@@ -11,7 +11,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 		header: "Type",
 	},
 	{
-		accessorKey: "time",
+		accessorKey: "formattedTime",
 		header: "Time Reported",
 	},
 	{
