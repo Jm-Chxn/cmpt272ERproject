@@ -8,13 +8,31 @@ import {
 	CardHeader,
 	CardTitle,
   } from "@/components/ui/card"
-import { Terminal } from "lucide-react"
-
+import { Emergency, columns } from "./columns";
+import { DataTable } from "./components/ui/data-table";
 import {
   generateRandomEmergencyLocation,
   useLocations,
 } from "./hooks/locations";
 
+
+function getData(): Emergency[] {
+	// Temporarily hardcoding data for now
+	return [
+		{
+		loc: "123 Main St",
+		emergency_type: "Fire",
+		report_time: "12:34 PM",
+		status: "OPEN",
+	  },
+	  {
+		loc: "456 Elm St",
+		emergency_type: "Medical",
+		report_time: "1:45 PM",
+		status: "OPEN",
+	  },
+	];
+}
 function App() {
   const [count, setCount] = useState(0);
   const { addLocation, removeLocation, locations, getTodaysEmergenciesCount } = useLocations();
@@ -72,7 +90,21 @@ function App() {
 						</CardContent>
 					</Card>
 					<Card>
-						
+						<CardHeader className="text-left">
+							<CardTitle className="text-xl font-bold">Emergency Reports</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<DataTable
+							// Temporarily hardcoded since columns.tsx is not working
+								columns={[
+									{ accessorKey: "loc", header: "Location" },
+									{ accessorKey: "emergency_type", header: "Type" },
+									{ accessorKey: "report_time", header: "Time Reported" },
+									{ accessorKey: "status", header: "Status" },
+								]}
+								data={getData()}
+							/>
+						</CardContent>
 					</Card>
 				
 				</div>

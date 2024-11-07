@@ -38,7 +38,7 @@ const LeafletMap = () => {
 			zoom={zoom}
 			scrollWheelZoom={true}
 			style={{
-				height: "100vh",
+				height: "50vh",
 				width: "100vh",
 				display: "block"
 			}}
@@ -54,9 +54,8 @@ const LeafletMap = () => {
 					position={[location.location.lat, location.location.lng]}
 				>
 					<Popup>
-						<strong>{location.location.place}</strong>
-						<br />
-						{location.emergencyType}
+						<div className="text-xl font-bold">{location.location.place}</div>
+						<div className="text-lg">{location.emergencyType}</div>
 					</Popup>
 				</Marker>
 			))}

@@ -37,7 +37,7 @@ export interface EmergencyLocation {
 }
 
 export const generateRandomEmergencyLocation = (): EmergencyLocation => {
-	const randomEmergencyType = ["fire", "shooting", "medical", "other"];
+	const randomEmergencyType = ["Fire", "Shooting", "Medical", "Other"];
 	const randomLocation = ["Vancouver", "Burnaby", "Richmond"];
 
 	return {
