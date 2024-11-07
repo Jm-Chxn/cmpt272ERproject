@@ -22,7 +22,7 @@ function App() {
   const resolvedEmergenciesCount = locations.filter((loc) => loc.status === "RESOLVED").length;
   return (
     <>
-	<div>
+	<div className="flex flex-col min-h-screen w-full">
 		<div className="hidden flex-col md:flex">
 			<div className="flex items-center justify-between space-y-2">
 				<h2 className="text-3xl font-bold tracking-tight">E-Comm Dashboard</h2>
@@ -62,7 +62,21 @@ function App() {
 						</CardContent>
 					</Card>
 				</div>
-				<LeafletMap />
+				<div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
+					<Card>
+						<CardHeader className="text-left">
+							<CardTitle className="text-xl font-bold">Emergency Location Map</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<LeafletMap />
+						</CardContent>
+					</Card>
+					<Card>
+						
+					</Card>
+				
+				</div>
+				
 				<button
 					onClick={() => addLocation(generateRandomEmergencyLocation())}
 					type="button"
