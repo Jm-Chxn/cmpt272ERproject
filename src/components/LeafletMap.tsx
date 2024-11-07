@@ -1,7 +1,8 @@
 import { useMap, MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocations, type EmergencyLocation } from "../hooks/locations.ts";
 import { useViewCoordinates } from "../hooks/viewCoordinates.ts";
+import { Marker as LeafletMarker } from "leaflet";
 
 const MapController = () => {
 	const map = useMap();
@@ -27,9 +28,15 @@ const MapController = () => {
 	return null;
 };
 
-const LeafletMap = () => {
+const LeafletMap = ({ selectedLocation }: { selectedLocation: EmergencyLocation | null }) => {
 	const { center, zoom } = useViewCoordinates();
 	const { locations } = useLocations();
+	const markerRefs = useRef<{ [key: string]: LeafletMarker | null }>({});
+	useEffect(() => {
+		if (selectedLocation && markerRefs.current[selectedLocation.id]) {
+			markerRefs.current[selectedLocation.id]?.openPopup();
+		}
+	}, [selectedLocation]);
 
 	return (
 		<div className="map-container">
@@ -53,6 +60,9 @@ const LeafletMap = () => {
 					<Marker
 						key={location.id}
 						position={[location.location.lat, location.location.lng]}
+						ref={(el) => {
+							if (el) markerRefs.current[location.id] = el;
+						}}
 					>
 						<Popup>
 							<div className="text-xl font-bold">{location.location.place}</div>

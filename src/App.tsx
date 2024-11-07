@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import LeafletMap from "./components/LeafletMap";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "./components/ui/data-table";
@@ -6,6 +7,7 @@ import { ScrollArea } from "./components/ui/scroll-area";
 import {
 	generateRandomEmergencyLocation,
 	useLocations,
+	type EmergencyLocation
 } from "./hooks/locations";
 import { columns } from "./columns";
 
@@ -17,12 +19,20 @@ function App() {
 		viewableLocations,
 		getTodaysEmergenciesCount,
 	} = useLocations();
+	const [selectedLocation, setSelectedLocation] = useState<EmergencyLocation | null>(null);
+
 	const openEmergenciesCount = locations.filter(
 		(loc) => loc.status === "OPEN",
 	).length;
 	const resolvedEmergenciesCount = locations.filter(
 		(loc) => loc.status === "RESOLVED",
 	).length;
+
+	const handleRowClick = (location: EmergencyLocation) => {
+		console.log("Row clicked:", location);
+		setSelectedLocation(location);
+	};
+
 	return (
 		<>
 			<div className="flex flex-col min-h-screen w-full">
@@ -37,7 +47,7 @@ function App() {
 							<Card>
 								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-left">
 									<CardTitle className="text-sm font-medium ">
-										Active emergencys:{" "}
+										Active emergencies:{" "}
 									</CardTitle>
 								</CardHeader>
 								<CardContent className="text-2xl font-bold text-left">
@@ -47,7 +57,7 @@ function App() {
 							<Card>
 								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-left">
 									<CardTitle className="text-sm font-medium ">
-										Resolved emergencys:{" "}
+										Resolved emergencies:{" "}
 									</CardTitle>
 								</CardHeader>
 								<CardContent className="text-2xl font-bold text-left">
@@ -83,7 +93,7 @@ function App() {
 									</CardTitle>
 								</CardHeader>
 								<CardContent>
-									<LeafletMap />
+									<LeafletMap selectedLocation={selectedLocation} />
 								</CardContent>
 							</Card>
 							<Card>
@@ -94,7 +104,7 @@ function App() {
 								</CardHeader>
 								<CardContent>
 									<ScrollArea className="h-[19.75rem] overflow-y-auto">
-										<DataTable columns={columns} data={viewableLocations} />
+										<DataTable columns={columns} data={viewableLocations} onRowClick={handleRowClick}/>
 									</ScrollArea>
 								</CardContent>
 							</Card>
