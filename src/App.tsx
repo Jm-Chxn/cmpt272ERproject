@@ -1,16 +1,17 @@
 import "./App.css";
 import { useState } from "react";
 import LeafletMap from "./components/LeafletMap";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "./components/ui/data-table";
 import { ScrollArea } from "./components/ui/scroll-area";
+import { Button } from "@/components/ui/button.tsx";
 import {
 	generateRandomEmergencyLocation,
 	useLocations,
 	type EmergencyLocation,
 } from "./hooks/locations";
 import { columns } from "./columns";
-import { AlertTriangle, FireExtinguisher, Heart, Plus, Timer } from "lucide-react";
+import {AlertTriangle, Heart, Plus, Siren, Timer} from "lucide-react";
 
 function App() {
 	const {
@@ -37,10 +38,9 @@ function App() {
 
 	return (
 		<>
-			<div className="flex flex-col min-h-screen w-full">
-				<div className="hidden flex-col md:flex">
-					<div className="flex items-center justify-between space-y-2">
-						<h2 className="text-3xl font-bold tracking-tight">
+			<div className="flex flex-col min-h-screen gap-2">
+					<div className="flex items-center justify-between">
+						<h2 className="text-3xl font-bold tracking-tight ml-8">
 							E-Comm Dashboard
 						</h2>
 					</div>
@@ -73,7 +73,7 @@ function App() {
 									<CardTitle className="text-sm font-medium ">
 										Total emergencies today:{" "}
 									</CardTitle>
-									<FireExtinguisher className="h-4 w-4 text-orange-500" />
+									<Siren className="h-4 w-4 text-orange-500" />
 								</CardHeader>
 								<CardContent className="text-2xl font-bold text-left">
 									{getTodaysEmergenciesCount()}
@@ -107,14 +107,15 @@ function App() {
 									<CardTitle className="text-xl font-bold w-fit">
 										Emergency Reports
 									</CardTitle>
-									<button
+									<Button
 										onClick={() =>
 											addLocation(generateRandomEmergencyLocation())
 										}
-										className="flex items-center justify-center h-8 w-8 p-0"
-									>
-										<Plus size={16} />
-									</button>
+										variant="outline" className="ml-auto flex items-center leading-none">
+										<Plus className="h-8 w-8 text-blue-200" />
+										New Report
+
+									</Button>
 								</CardHeader>
 								<CardContent className="h-[50dvh] py-0">
 									<ScrollArea className="h-full overflow-y-auto">
@@ -140,7 +141,6 @@ function App() {
 							</button>
 						</div>
 					</div>
-				</div>
 			</div>
 		</>
 	);
