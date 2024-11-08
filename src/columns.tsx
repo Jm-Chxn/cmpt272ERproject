@@ -2,8 +2,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { EmergencyLocation, useLocations } from "./hooks/locations";
 import { useState } from "react";
 
-import { MoreHorizontal, LineChart, Trash2, ListCheck } from "lucide-react";
+import { MoreVertical, LineChart, Trash2, ListCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -28,6 +29,18 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 	{
 		accessorKey: "emergencyType",
 		header: "Type",
+		cell: ({ row }) => {
+			const type = row.getValue("emergencyType") as string
+			return (
+			  <Badge 
+			  	variant={getEmergencyTypeBadgeVariant(type)}
+				className="rounded-full px-3 py-1 text-xs font-semibold"
+			  
+			  >
+				{type}
+			  </Badge>
+			)
+		  },
 	},
 	{
 		accessorKey: "formattedTime",
@@ -36,6 +49,17 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 	{
 		accessorKey: "status",
 		header: "Status",
+		cell: ({ row }) => {
+			const status = row.getValue("status") as string
+			return (
+			  <Badge 
+			  variant={getStatusBadgeVariant(status)}
+			  className="rounded-full px-3 py-0.5 text-xs font-semibold"
+			  >
+				{status}
+			  </Badge>
+			)
+		  },
 	},
 	{
 		id: "actions",
@@ -47,10 +71,11 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 			return (
 				<>
 					<DropdownMenu>
+
 						<DropdownMenuTrigger asChild>
-							<Button variant="ghost" className="h-8 w-8 p-0">
+							<Button variant="ghost" className="h-8 w-8 p-0 bg-transparent">
 								<span className="sr-only">Open menu</span>
-								<MoreHorizontal className="h-4 w-4" />
+								<MoreVertical className="h-4 w-4" />
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
@@ -96,3 +121,26 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 		},
 	},
 ];
+
+function getEmergencyTypeBadgeVariant(type: string): "default" | "destructive" | "outline" | "secondary" {
+	switch (type.toLowerCase()) {
+	  case "fire":
+		return "destructive"
+	  case "medical":
+		return "outline"
+	  case "shooting":
+		return "secondary"
+	  default:
+		return "outline"
+	}
+}
+function getStatusBadgeVariant(status: string): "default" | "destructive" | "outline" | "secondary" {
+	switch (status.toLowerCase()) {
+	  case "open":
+		return "destructive"
+	  case "resolved":
+		return "outline"
+	  default:
+		return "outline"
+	}
+}

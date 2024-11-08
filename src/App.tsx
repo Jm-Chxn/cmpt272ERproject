@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import LeafletMap from "./components/LeafletMap";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "./components/ui/data-table";
 import { ScrollArea } from "./components/ui/scroll-area";
 import {
@@ -10,7 +10,7 @@ import {
 	type EmergencyLocation,
 } from "./hooks/locations";
 import { columns } from "./columns";
-import { Plus } from "lucide-react";
+import { AlertTriangle, FireExtinguisher, Heart, Plus, Timer } from "lucide-react";
 
 function App() {
 	const {
@@ -47,43 +47,47 @@ function App() {
 					<div className="flex-1 space-y-4 p-8 pt-6">
 						<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 							<Card>
-								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-left">
+								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 									<CardTitle className="text-sm font-medium ">
 										Active emergencies:{" "}
 									</CardTitle>
+									<AlertTriangle className="h-4 w-4 text-red-500" />
 								</CardHeader>
 								<CardContent className="text-2xl font-bold text-left">
 									{openEmergenciesCount}
 								</CardContent>
 							</Card>
 							<Card>
-								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-left">
+								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 									<CardTitle className="text-sm font-medium ">
 										Resolved emergencies:{" "}
 									</CardTitle>
+									<Heart className="h-4 w-4 text-green-500" />
 								</CardHeader>
 								<CardContent className="text-2xl font-bold text-left">
 									{resolvedEmergenciesCount}
 								</CardContent>
 							</Card>
 							<Card>
-								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-left">
+								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 									<CardTitle className="text-sm font-medium ">
 										Total emergencies today:{" "}
 									</CardTitle>
+									<FireExtinguisher className="h-4 w-4 text-orange-500" />
 								</CardHeader>
 								<CardContent className="text-2xl font-bold text-left">
 									{getTodaysEmergenciesCount()}
 								</CardContent>
 							</Card>
 							<Card>
-								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-left">
+								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 									<CardTitle className="text-sm font-medium ">
-										Placeholder:{" "}
+										Average Response Time:{" "}
 									</CardTitle>
+									<Timer className="h-4 w-4 text-blue-500" />
 								</CardHeader>
 								<CardContent className="text-2xl font-bold text-left">
-									0 (placeholder)
+									8.5m
 								</CardContent>
 							</Card>
 						</div>
