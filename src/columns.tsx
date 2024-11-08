@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { EmergencyLocation, useLocations } from "./hooks/locations";
 import { useState } from "react";
 
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, LineChart, Trash2, ListCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -55,14 +55,23 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							onClick={() => markAsResolved(location.id)}
-						>Mark as resolved</DropdownMenuItem>
+						>
+							<ListCheck className="h-4 w-4" />
+							Mark as resolved</DropdownMenuItem>
 						<DropdownMenuItem
 							onClick={() => setIsDrawerOpen(true)}
-						>View details</DropdownMenuItem>
+						>
+							<LineChart className="h-4 w-4" />
+							View details</DropdownMenuItem>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem
+							onClick={() => {/*Add delete functionality here. Does nothing for now*/}}
+						>
+							<Trash2 className="h-4 w-4" />
+							Delete</DropdownMenuItem>
+
 					</DropdownMenuContent>
 				</DropdownMenu>
 				<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>

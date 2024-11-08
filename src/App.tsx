@@ -10,6 +10,8 @@ import {
 	type EmergencyLocation
 } from "./hooks/locations";
 import { columns } from "./columns";
+import { Plus } from "lucide-react";
+
 
 function App() {
 	const {
@@ -97,10 +99,14 @@ function App() {
 								</CardContent>
 							</Card>
 							<Card>
-								<CardHeader className="text-left">
-									<CardTitle className="text-xl font-bold">
-										Emergency Reports
-									</CardTitle>
+							<CardHeader className="flex text-left justify-between w-full">
+    							<CardTitle className="text-xl font-bold">Emergency Reports</CardTitle>
+									<button
+										onClick={() => addLocation(generateRandomEmergencyLocation())}
+										className="ml-auto flex items-center justify-center h-8 w-8 p-0"
+									>
+										<Plus size={16} />
+									</button>
 								</CardHeader>
 								<CardContent>
 									<ScrollArea className="h-[19.75rem] overflow-y-auto">
@@ -110,12 +116,6 @@ function App() {
 							</Card>
 						</div>
 						<div className="flex-1 space-x-2">
-							<button
-								onClick={() => addLocation(generateRandomEmergencyLocation())}
-								type="button"
-							>
-								Add Random
-							</button>
 							<button
 								onClick={() =>
 									removeLocation(
