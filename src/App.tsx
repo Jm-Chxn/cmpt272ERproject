@@ -99,7 +99,7 @@ function App() {
 								</CardContent>
 							</Card>
 							<Card>
-								<CardHeader className="flex flex-row items-center text-left justify-between">
+								<CardHeader className="flex flex-row items-center text-left justify-between pb-3">
 									<CardTitle className="text-xl font-bold w-fit">
 										Emergency Reports
 									</CardTitle>
@@ -112,7 +112,7 @@ function App() {
 										<Plus size={16} />
 									</button>
 								</CardHeader>
-								<CardContent className="h-[50dvh] pb-2">
+								<CardContent className="h-[50dvh] py-0">
 									<ScrollArea className="h-full overflow-y-auto">
 										<DataTable
 											columns={columns}
