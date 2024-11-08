@@ -94,6 +94,13 @@ export const useLocations = () => {
 
 	const viewableLocations = locations.filter((loc) => isInBounds(loc, bounds));
 
+	const markAsResolved = (id: string) => {
+		const updatedLocations = locations.map((loc) =>
+			loc.id === id ? { ...loc, status: "RESOLVED" as "RESOLVED" } : loc
+		);
+		setLocations(updatedLocations);
+	};
+
 	const getTodaysEmergenciesCount = () => {
 		const startOfToday = new Date();
 		startOfToday.setHours(0, 0, 0, 0);
@@ -107,6 +114,8 @@ export const useLocations = () => {
 		viewableLocations,
 		removeLocation,
 		addLocation,
+		markAsResolved,
 		getTodaysEmergenciesCount,
+		setLocations,
 	};
 };
