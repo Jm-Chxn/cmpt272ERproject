@@ -112,7 +112,7 @@ function App() {
 										<Plus size={16} />
 									</button>
 								</CardHeader>
-								<CardContent className="h-[50dvh]">
+								<CardContent className="h-[50dvh] pb-2">
 									<ScrollArea className="h-full overflow-y-auto">
 										<DataTable
 											columns={columns}
