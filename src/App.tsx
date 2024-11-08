@@ -13,7 +13,7 @@ import {
 } from "./hooks/locations";
 import { Switch } from "./components/ui/switch";
 import { columns } from "./columns";
-import {AlertTriangle, Heart, Plus, Siren, Timer} from "lucide-react";
+import {AlertTriangle, Heart, Plus, Siren, Timer, Sun, Moon} from "lucide-react";
 
 function App() {
 	const {
@@ -135,8 +135,10 @@ function App() {
 								</CardContent>
 							</Card>
 						</div>
-						<div className="flex-1 space-x-2">
+						<div className="flex justify-center space-x-2">
 							<Button
+								className="flex items-center "
+								variant="secondary"
 								onClick={() =>
 									removeLocation(
 										locations[Math.floor(Math.random() * locations.length)],
@@ -145,8 +147,9 @@ function App() {
 							>
 								Remove Random
 							</Button>
-							<Button onClick={toggleDarkMode}>
-								{isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+							<Button onClick={toggleDarkMode} variant="secondary"
+							className="ml-auto flex items-center ">
+								{isDarkMode ? <Moon /> : <Sun />}
 							</Button>
 						</div>
 					</div>
