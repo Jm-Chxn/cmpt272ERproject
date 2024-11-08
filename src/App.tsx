@@ -7,11 +7,10 @@ import { ScrollArea } from "./components/ui/scroll-area";
 import {
 	generateRandomEmergencyLocation,
 	useLocations,
-	type EmergencyLocation
+	type EmergencyLocation,
 } from "./hooks/locations";
 import { columns } from "./columns";
 import { Plus } from "lucide-react";
-
 
 function App() {
 	const {
@@ -21,7 +20,8 @@ function App() {
 		viewableLocations,
 		getTodaysEmergenciesCount,
 	} = useLocations();
-	const [selectedLocation, setSelectedLocation] = useState<EmergencyLocation | null>(null);
+	const [selectedLocation, setSelectedLocation] =
+		useState<EmergencyLocation | null>(null);
 
 	const openEmergenciesCount = locations.filter(
 		(loc) => loc.status === "OPEN",
@@ -99,18 +99,26 @@ function App() {
 								</CardContent>
 							</Card>
 							<Card>
-							<CardHeader className="flex text-left justify-between w-full">
-    							<CardTitle className="text-xl font-bold">Emergency Reports</CardTitle>
+								<CardHeader className="flex flex-row items-center text-left justify-between">
+									<CardTitle className="text-xl font-bold w-fit">
+										Emergency Reports
+									</CardTitle>
 									<button
-										onClick={() => addLocation(generateRandomEmergencyLocation())}
-										className="ml-auto flex items-center justify-center h-8 w-8 p-0"
+										onClick={() =>
+											addLocation(generateRandomEmergencyLocation())
+										}
+										className="flex items-center justify-center h-8 w-8 p-0"
 									>
 										<Plus size={16} />
 									</button>
 								</CardHeader>
-								<CardContent>
-									<ScrollArea className="h-[19.75rem] overflow-y-auto">
-										<DataTable columns={columns} data={viewableLocations} onRowClick={handleRowClick}/>
+								<CardContent className="h-[50dvh]">
+									<ScrollArea className="h-full overflow-y-auto">
+										<DataTable
+											columns={columns}
+											data={viewableLocations}
+											onRowClick={handleRowClick}
+										/>
 									</ScrollArea>
 								</CardContent>
 							</Card>
