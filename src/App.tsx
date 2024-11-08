@@ -1,5 +1,6 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import LeafletMap from "./components/LeafletMap";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "./components/ui/data-table";
@@ -10,6 +11,7 @@ import {
 	useLocations,
 	type EmergencyLocation,
 } from "./hooks/locations";
+import { Switch } from "./components/ui/switch";
 import { columns } from "./columns";
 import {AlertTriangle, Heart, Plus, Siren, Timer} from "lucide-react";
 
@@ -34,6 +36,11 @@ function App() {
 	const handleRowClick = (location: EmergencyLocation) => {
 		console.log("Row clicked:", location);
 		setSelectedLocation(location);
+	};
+	const [isDarkMode, setIsDarkMode] = useState(true);
+	const toggleDarkMode = () => {
+	  setIsDarkMode((prev) => !prev);
+	  document.body.classList.toggle("dark", !isDarkMode);
 	};
 
 	return (
@@ -112,7 +119,7 @@ function App() {
 											addLocation(generateRandomEmergencyLocation())
 										}
 										variant="outline" className="ml-auto flex items-center leading-none">
-										<Plus className="h-8 w-8 text-blue-200" />
+										<Plus className="h-8 w-8 text-blue-400" />
 										New Report
 
 									</Button>
@@ -129,16 +136,18 @@ function App() {
 							</Card>
 						</div>
 						<div className="flex-1 space-x-2">
-							<button
+							<Button
 								onClick={() =>
 									removeLocation(
 										locations[Math.floor(Math.random() * locations.length)],
 									)
 								}
-								type="button"
 							>
 								Remove Random
-							</button>
+							</Button>
+							<Button onClick={toggleDarkMode}>
+								{isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+							</Button>
 						</div>
 					</div>
 			</div>
