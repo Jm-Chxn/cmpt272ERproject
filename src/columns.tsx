@@ -69,8 +69,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 			// eslint-disable-next-line react-hooks/rules-of-hooks
 			const [isSheetOpen, setIsSheetOpen] = useState(false);
 			// eslint-disable-next-line react-hooks/rules-of-hooks
-			const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-			const { markAsResolved, removeLocation } = useLocations();
+			const { markAsResolved, removeLocation} = useLocations();
 
 			return (
 				<>
