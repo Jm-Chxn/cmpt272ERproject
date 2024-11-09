@@ -13,12 +13,12 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-	Drawer,
-	DrawerContent,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerDescription,
-} from "@/components/ui/drawer";
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetDescription,
+} from "@/components/ui/sheet";
 import { Card, CardContent } from "@/components/ui/card";
 import { checkPassword } from "./lib/MD5";
 
@@ -34,7 +34,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 			const type = row.getValue("emergencyType") as string
 			return (
 			  <Badge 
-			  	variant={getEmergencyTypeBadgeVariant(type)}
+			  	variant="outline"
 				className="rounded-full px-3 py-1 text-xs font-semibold"
 			  
 			  >
@@ -66,13 +66,15 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 		id: "actions",
 		cell: ({ row }) => {
 			const location = row.original;
+			// eslint-disable-next-line react-hooks/rules-of-hooks
+			const [isSheetOpen, setIsSheetOpen] = useState(false);
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 			const { markAsResolved, removeLocation } = useLocations();
 
 			return (
 				<>
 					<DropdownMenu>
-
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="h-8 w-8 p-0 bg-transparent">
 								<span className="sr-only">Open menu</span>
@@ -89,7 +91,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 								<ListCheck className="h-4 w-4" />
 								Mark as resolved
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => setIsDrawerOpen(true)}>
+							<DropdownMenuItem onClick={() => setIsSheetOpen(true)}>
 								<LineChart className="h-4 w-4" />
 								View details
 							</DropdownMenuItem>
@@ -105,24 +107,22 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
-					<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-						<DrawerContent style={{ zIndex: 1000 }}>
-							<DrawerHeader>
-								<DrawerTitle>
-									<h2 className="text-3xl font-bold tracking-tight">
+					<Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen} >
+						<SheetContent  style={{ zIndex: 1000 }}>
+							<SheetHeader>
+								<SheetTitle>
 										Incident Details
-									</h2>
-								</DrawerTitle>
-							</DrawerHeader>
-							<DrawerDescription>
+								</SheetTitle>
+							</SheetHeader>
+							<SheetDescription>
 								<Card>
 									<CardContent>
 										<img src={location.pictureLink} alt="Incident Image" />
 									</CardContent>
 								</Card>
-							</DrawerDescription>
-						</DrawerContent>
-					</Drawer>
+							</SheetDescription>
+						</SheetContent>
+					</Sheet>
 				</>
 			);
 		},
