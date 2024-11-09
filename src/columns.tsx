@@ -20,6 +20,7 @@ import {
 	DrawerDescription,
 } from "@/components/ui/drawer";
 import { Card, CardContent } from "@/components/ui/card";
+import { checkPassword } from "./lib/MD5";
 
 export const columns: ColumnDef<EmergencyLocation>[] = [
 	{
@@ -66,7 +67,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 		cell: ({ row }) => {
 			const location = row.original;
 			const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-			const { markAsResolved } = useLocations();
+			const { markAsResolved, removeLocation } = useLocations();
 
 			return (
 				<>
@@ -79,7 +80,12 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuItem onClick={() => markAsResolved(location.id)}>
+							<DropdownMenuItem onClick={ async () => 
+                                {
+                                    if(await checkPassword()) {
+                                        markAsResolved(location.id)
+                                    }    
+                                }}>
 								<ListCheck className="h-4 w-4" />
 								Mark as resolved
 							</DropdownMenuItem>
@@ -88,11 +94,12 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 								View details
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem
-								onClick={() => {
-									/*Add delete functionality here. Does nothing for now*/
-								}}
-							>
+							<DropdownMenuItem onClick={ async () => 
+                                {
+                                    if(await checkPassword()) {
+                                        removeLocation(location);
+                                    }
+								}}>
 								<Trash2 className="h-4 w-4" />
 								Delete
 							</DropdownMenuItem>
