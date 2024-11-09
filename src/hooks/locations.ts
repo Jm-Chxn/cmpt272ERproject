@@ -96,7 +96,7 @@ export const useLocations = () => {
 
 	const markAsResolved = (id: string) => {
 		const updatedLocations = locations.map((loc) =>
-			loc.id === id ? { ...loc, status: "RESOLVED" as "RESOLVED" } : loc
+			loc.id === id ? { ...loc, status: "RESOLVED" as const } : loc
 		);
 		setLocations(updatedLocations);
 	};

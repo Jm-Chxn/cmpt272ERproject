@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState  } from "react";
 
 import LeafletMap from "./components/LeafletMap";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +11,6 @@ import {
 	useLocations,
 	type EmergencyLocation,
 } from "./hooks/locations";
-import { Switch } from "./components/ui/switch";
 import { columns } from "./columns";
 import {AlertTriangle, Heart, Plus, Siren, Timer, Sun, Moon} from "lucide-react";
 
