@@ -121,8 +121,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 	},
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getEmergencyTypeBadgeVariant(type: string): "default" | "destructive" | "outline" | "secondary" {
+export function getEmergencyTypeBadgeVariant(type: string): "default" | "destructive" | "outline" | "secondary" {
 	switch (type.toLowerCase()) {
 	  case "fire":
 		return "destructive"
