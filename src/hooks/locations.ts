@@ -1,6 +1,6 @@
+import type { LatLngBounds } from "leaflet";
 import { useLocalStorage } from "usehooks-ts";
 import { useViewCoordinates } from "./viewCoordinates.ts";
-import type { LatLngBounds } from "leaflet";
 
 const isInBounds = (
 	location: EmergencyLocation,
@@ -96,7 +96,7 @@ export const useLocations = () => {
 
 	const markAsResolved = (id: string) => {
 		const updatedLocations = locations.map((loc) =>
-			loc.id === id ? { ...loc, status: "RESOLVED" as const } : loc
+			loc.id === id ? { ...loc, status: "RESOLVED" as const } : loc,
 		);
 		setLocations(updatedLocations);
 	};

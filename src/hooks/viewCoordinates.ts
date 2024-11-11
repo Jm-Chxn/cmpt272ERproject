@@ -3,7 +3,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { LatLng, LatLngBounds } from "leaflet";
 
 export const useViewCoordinates = () => {
-  // default values taken from google maps
+	// default values taken from google maps
 
 	// {"lat":49.23681619396022,"lng":-123.05455607011129}
 	const [center, setCenter] = useLocalStorage<LatLng>(

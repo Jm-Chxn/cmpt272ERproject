@@ -1,8 +1,8 @@
-import { useMap, MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import type { Marker as LeafletMarker } from "leaflet";
 import { useEffect, useRef } from "react";
-import { useLocations, type EmergencyLocation } from "../hooks/locations.ts";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { type EmergencyLocation, useLocations } from "../hooks/locations.ts";
 import { useViewCoordinates } from "../hooks/viewCoordinates.ts";
-import { Marker as LeafletMarker } from "leaflet";
 
 const MapController = () => {
 	const map = useMap();
@@ -28,7 +28,9 @@ const MapController = () => {
 	return null;
 };
 
-const LeafletMap = ({ selectedLocation }: { selectedLocation: EmergencyLocation | null }) => {
+const LeafletMap = ({
+	selectedLocation,
+}: { selectedLocation: EmergencyLocation | null }) => {
 	const { center, zoom } = useViewCoordinates();
 	const { locations } = useLocations();
 	const markerRefs = useRef<{ [key: string]: LeafletMarker | null }>({});
