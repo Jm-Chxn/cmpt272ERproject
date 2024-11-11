@@ -1,10 +1,10 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { EmergencyLocation, useLocations } from "./hooks/locations";
+import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
+import { type EmergencyLocation, useLocations } from "./hooks/locations";
 
-import { MoreVertical, LineChart, Trash2, ListCheck } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -15,11 +15,11 @@ import {
 import {
 	Sheet,
 	SheetContent,
+	SheetDescription,
 	SheetHeader,
 	SheetTitle,
-	SheetDescription,
 } from "@/components/ui/sheet";
-import { Card, CardContent } from "@/components/ui/card";
+import { LineChart, ListCheck, MoreVertical, Trash2 } from "lucide-react";
 import { checkPassword } from "./lib/MD5";
 
 export const columns: ColumnDef<EmergencyLocation>[] = [
@@ -31,17 +31,16 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 		accessorKey: "emergencyType",
 		header: "Type",
 		cell: ({ row }) => {
-			const type = row.getValue("emergencyType") as string
+			const type = row.getValue("emergencyType") as string;
 			return (
-			  <Badge 
-			  	variant="outline"
-				className="rounded-full px-3 py-1 text-xs font-semibold"
-			  
-			  >
-				{type}
-			  </Badge>
-			)
-		  },
+				<Badge
+					variant="outline"
+					className="rounded-full px-3 py-1 text-xs font-semibold"
+				>
+					{type}
+				</Badge>
+			);
+		},
 	},
 	{
 		accessorKey: "formattedTime",
@@ -51,16 +50,16 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 		accessorKey: "status",
 		header: "Status",
 		cell: ({ row }) => {
-			const status = row.getValue("status") as string
+			const status = row.getValue("status") as string;
 			return (
-			  <Badge 
-			  variant={getStatusBadgeVariant(status)}
-			  className="rounded-full px-3 py-0.5 text-xs font-semibold"
-			  >
-				{status}
-			  </Badge>
-			)
-		  },
+				<Badge
+					variant={getStatusBadgeVariant(status)}
+					className="rounded-full px-3 py-0.5 text-xs font-semibold"
+				>
+					{status}
+				</Badge>
+			);
+		},
 	},
 	{
 		id: "actions",
@@ -69,7 +68,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 			// eslint-disable-next-line react-hooks/rules-of-hooks
 			const [isSheetOpen, setIsSheetOpen] = useState(false);
 			// eslint-disable-next-line react-hooks/rules-of-hooks
-			const { markAsResolved, removeLocation} = useLocations();
+			const { markAsResolved, removeLocation } = useLocations();
 
 			return (
 				<>
@@ -81,12 +80,13 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuItem onClick={ async () => 
-                                {
-                                    if(await checkPassword()) {
-                                        markAsResolved(location.id)
-                                    }    
-                                }}>
+							<DropdownMenuItem
+								onClick={async () => {
+									if (await checkPassword()) {
+										markAsResolved(location.id);
+									}
+								}}
+							>
 								<ListCheck className="h-4 w-4" />
 								Mark as resolved
 							</DropdownMenuItem>
@@ -95,23 +95,22 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 								View details
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem onClick={ async () => 
-                                {
-                                    if(await checkPassword()) {
-                                        removeLocation(location);
-                                    }
-								}}>
+							<DropdownMenuItem
+								onClick={async () => {
+									if (await checkPassword()) {
+										removeLocation(location);
+									}
+								}}
+							>
 								<Trash2 className="h-4 w-4" />
 								Delete
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
-					<Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen} >
-						<SheetContent  style={{ zIndex: 1000 }}>
+					<Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+						<SheetContent style={{ zIndex: 1000 }}>
 							<SheetHeader>
-								<SheetTitle>
-										Incident Details
-								</SheetTitle>
+								<SheetTitle>Incident Details</SheetTitle>
 							</SheetHeader>
 							<SheetDescription>
 								<Card>
@@ -128,25 +127,29 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 	},
 ];
 
-function getEmergencyTypeBadgeVariant(type: string): "default" | "destructive" | "outline" | "secondary" {
+function getEmergencyTypeBadgeVariant(
+	type: string,
+): "default" | "destructive" | "outline" | "secondary" {
 	switch (type.toLowerCase()) {
-	  case "fire":
-		return "destructive"
-	  case "medical":
-		return "outline"
-	  case "shooting":
-		return "secondary"
-	  default:
-		return "outline"
+		case "fire":
+			return "destructive";
+		case "medical":
+			return "outline";
+		case "shooting":
+			return "secondary";
+		default:
+			return "outline";
 	}
 }
-function getStatusBadgeVariant(status: string): "default" | "destructive" | "outline" | "secondary" {
+function getStatusBadgeVariant(
+	status: string,
+): "default" | "destructive" | "outline" | "secondary" {
 	switch (status.toLowerCase()) {
-	  case "open":
-		return "destructive"
-	  case "resolved":
-		return "outline"
-	  default:
-		return "outline"
+		case "open":
+			return "destructive";
+		case "resolved":
+			return "outline";
+		default:
+			return "outline";
 	}
 }
