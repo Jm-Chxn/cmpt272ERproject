@@ -45,7 +45,9 @@ function App() {
 		console.log("Row clicked:", location);
 		setSelectedLocation(location);
 	};
+
 	const [isDarkMode, setIsDarkMode] = useState(true);
+
 	const toggleDarkMode = () => {
 		setIsDarkMode((prev) => !prev);
 		document.body.classList.toggle("dark", !isDarkMode);

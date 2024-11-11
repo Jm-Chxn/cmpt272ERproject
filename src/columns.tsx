@@ -115,7 +115,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 							<SheetDescription>
 								<Card>
 									<CardContent>
-										<img src={location.pictureLink} alt="Incident Image" />
+										<img src={location.pictureLink} alt="Incident" />
 									</CardContent>
 								</Card>
 							</SheetDescription>
@@ -127,7 +127,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 	},
 ];
 
-function getEmergencyTypeBadgeVariant(
+export function getEmergencyTypeBadgeVariant(
 	type: string,
 ): "default" | "destructive" | "outline" | "secondary" {
 	switch (type.toLowerCase()) {
