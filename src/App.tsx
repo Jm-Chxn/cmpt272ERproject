@@ -21,6 +21,7 @@ import {
 	generateRandomEmergencyLocation,
 	useLocations,
 } from "./hooks/locations";
+import { useLocalStorage } from "usehooks-ts";
 
 function App() {
 	const {
@@ -30,8 +31,9 @@ function App() {
 		viewableLocations,
 		getTodaysEmergenciesCount,
 	} = useLocations();
-	const [selectedLocation, setSelectedLocation] =
-		useState<EmergencyLocation | null>(null);
+
+	const [_selectedLocation, setSelectedLocation] =
+		useLocalStorage<EmergencyLocation | null>("selectedLocation", null);
 
 	const openEmergenciesCount = locations.filter(
 		(loc) => loc.status === "OPEN",
@@ -115,7 +117,7 @@ function App() {
 								</CardTitle>
 							</CardHeader>
 							<CardContent>
-								<LeafletMap selectedLocation={selectedLocation} />
+								<LeafletMap />
 							</CardContent>
 						</Card>
 						<Card>

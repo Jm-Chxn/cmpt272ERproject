@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { type EmergencyLocation, useLocations } from "../hooks/locations.ts";
 import { useViewCoordinates } from "../hooks/viewCoordinates.ts";
+import { useLocalStorage } from "usehooks-ts";
 
 const MapController = ({
 	markersRef,
@@ -11,26 +12,27 @@ const MapController = ({
 }) => {
 	const map = useMap();
 	const { setZoom, setBounds, setCenter } = useViewCoordinates();
+	const [selectedLocation, _setSelectedLocation] =
+		useLocalStorage<EmergencyLocation | null>("selectedLocation", null);
 
 	useEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const handleFocusMarker = (
-			e: CustomEvent<{ id: string; lat: number; lng: number }>,
-		) => {
-			if (location) {
-				map.flyTo([e.detail.lat, e.detail.lng], map.getZoom(), {
+		if (selectedLocation && markersRef.current[selectedLocation.id]) {
+			map.flyTo(
+				[selectedLocation.location.lat, selectedLocation.location.lng],
+				map.getZoom(),
+				{
 					animate: true,
 					duration: 0.5,
-				});
+				},
+			);
 
-				if (markersRef.current[e.detail.id]) {
-					markersRef.current[e.detail.id].openPopup();
-				} else {
-					console.log("marker not found:", e.detail.id);
-				}
+			if (markersRef.current[selectedLocation.id]) {
+				markersRef.current[selectedLocation.id]?.openPopup();
+			} else {
+				console.log("marker not found:", selectedLocation.id);
 			}
-		};
-	}, [markersRef, map]);
+		}
+	}, [markersRef, map, selectedLocation]);
 
 	useEffect(() => {
 		const updateMapInfo = () => {
@@ -52,17 +54,10 @@ const MapController = ({
 	return null;
 };
 
-const LeafletMap = ({
-	selectedLocation,
-}: { selectedLocation: EmergencyLocation | null }) => {
+const LeafletMap = () => {
 	const { center, zoom } = useViewCoordinates();
 	const { locations } = useLocations();
 	const markerRefs = useRef<{ [key: string]: LeafletMarker | null }>({});
-	useEffect(() => {
-		if (selectedLocation && markerRefs.current[selectedLocation.id]) {
-			markerRefs.current[selectedLocation.id]?.openPopup();
-		}
-	}, [selectedLocation]);
 
 	return (
 		<div className="map-container">
@@ -77,7 +72,7 @@ const LeafletMap = ({
 					borderRadius: "var(--radius)",
 				}}
 			>
-				<MapController />
+				<MapController markersRef={markerRefs} />
 				<TileLayer
 					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
