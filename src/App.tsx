@@ -61,6 +61,13 @@ function App() {
 					<h2 className="text-3xl font-bold tracking-tight ml-8">
 						E-Comm Dashboard
 					</h2>
+					<Button
+						onClick={toggleDarkMode}
+						variant="secondary"
+						className="ml-auto flex items-center mr-8"
+					>
+						{isDarkMode ? <Moon /> : <Sun />}
+					</Button>
 				</div>
 				<div className="flex-1 space-y-4 p-8 pt-6">
 					<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -157,13 +164,7 @@ function App() {
 						>
 							Remove Random
 						</Button>
-						<Button
-							onClick={toggleDarkMode}
-							variant="secondary"
-							className="ml-auto flex items-center "
-						>
-							{isDarkMode ? <Moon /> : <Sun />}
-						</Button>
+			
 					</div>
 				</div>
 			</div>
