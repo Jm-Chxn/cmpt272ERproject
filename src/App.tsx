@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +16,6 @@ import { columns } from "./columns";
 import LeafletMap from "./components/LeafletMap";
 import { DataTable } from "./components/ui/data-table";
 import { ScrollArea } from "./components/ui/scroll-area";
-import { Switch } from "./components/ui/switch";
 import {
 	type EmergencyLocation,
 	generateRandomEmergencyLocation,

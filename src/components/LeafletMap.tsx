@@ -4,17 +4,16 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { type EmergencyLocation, useLocations } from "../hooks/locations.ts";
 import { useViewCoordinates } from "../hooks/viewCoordinates.ts";
 
-export function focusMarker(id: string, lat: number, lng: number) {
-	const event = new CustomEvent("focusMarker", { detail: { id, lat, lng } });
-	document.dispatchEvent(event);
-}
-
-const MapController = ({ markersRef }) => {
+const MapController = ({
+	markersRef,
+}: {
+	markersRef: React.MutableRefObject<{ [key: string]: LeafletMarker | null }>;
+}) => {
 	const map = useMap();
 	const { setZoom, setBounds, setCenter } = useViewCoordinates();
-	const { locations } = useLocations();
 
 	useEffect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const handleFocusMarker = (
 			e: CustomEvent<{ id: string; lat: number; lng: number }>,
 		) => {
@@ -31,12 +30,7 @@ const MapController = ({ markersRef }) => {
 				}
 			}
 		};
-
-		document.addEventListener("focusMarker", handleFocusMarker);
-		return () => {
-			document.removeEventListener("focusMarker", handleFocusMarker);
-		};
-	}, [locations]);
+	}, [markersRef, map]);
 
 	useEffect(() => {
 		const updateMapInfo = () => {
