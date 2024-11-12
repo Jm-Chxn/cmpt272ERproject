@@ -59,6 +59,9 @@ const LeafletMap = () => {
 	const { locations } = useLocations();
 	const markerRefs = useRef<{ [key: string]: LeafletMarker | null }>({});
 
+	const [_selectedLocation, setSelectedLocation] =
+		useLocalStorage<EmergencyLocation | null>("selectedLocation", null);
+
 	return (
 		<div className="map-container">
 			<MapContainer
@@ -84,8 +87,11 @@ const LeafletMap = () => {
 						ref={(el) => {
 							if (el) markerRefs.current[location.id] = el;
 						}}
+						eventHandlers={{
+							click: () => setSelectedLocation(location),
+						}}
 					>
-						<Popup>
+						<Popup autoPan={false}>
 							<div className="text-xl font-bold">{location.location.place}</div>
 							<div className="text-lg">{location.emergencyType}</div>
 						</Popup>
