@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button} from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -11,12 +11,14 @@ import {
 } from "@/components/ui/card";
 import {
 	AlertTriangle,
+	Camera,
 	Heart,
 	Moon,
 	Plus,
 	Siren,
 	Sun,
 	Timer,
+	Upload,
 } from "lucide-react";
 import { columns } from "./columns";
 import LeafletMap from "./components/LeafletMap";
@@ -65,8 +67,9 @@ function App() {
 		name: "",
 		phone: "",
 		comments: "",
+		imageUrl: "",
 	});
-
+	
 	const openEmergenciesCount = locations.filter(
 		(loc) => loc.status === "OPEN",
 	).length;
@@ -86,26 +89,103 @@ function App() {
 		document.body.classList.toggle("dark", !isDarkMode);
 	};
 
-	//form data
-	const handleFormSubmit = (e: React.FormEvent) => {
+	
+	 //form data
+	 // Add these new states for image handling
+	  const [imageUploadMethod, setImageUploadMethod] = useState<'url' | 'upload'>('url');
+	  const [previewUrl, setPreviewUrl] = useState<string>('');
+	  const [imageFile, setImageFile] = useState<File | null>(null);
+	  
+	  // Add image handling functions
+	  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (file) {
+		  setImageFile(file);
+		  const objectUrl = URL.createObjectURL(file);
+		  setPreviewUrl(objectUrl);
+		  
+		  
+		  //the preview URL(will need to upload somewhere)
+		  setFormData(prev => ({
+			...prev,
+			imageUrl: objectUrl
+		  }));
+		}
+	  };
+	  
+	  const handleUrlInput = (value: string) => {
+		setFormData(prev => ({
+		  ...prev,
+		  imageUrl: value
+		}));
+		setPreviewUrl(value);
+	  };
+	  
+	  // Update your NewEmergencyLocation interface
+	  interface NewEmergencyLocation {
+		emergencyType: string;
+		location: {
+		  place: string;
+		  coordinates: {
+			lat: number;
+			lng: number;
+		  };
+		};
+		name: string;
+		phone: string;
+		comments: string;
+		status: "OPEN" | "RESOLVED";
+		formattedTime: string;
+		pictureLink: string; 
+	  }
+	  
+	  // Update your form submission handler
+	  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addLocation(generateRandomEmergencyLocation());
+		
+		const currentTime = Date.now();
+		
+		const newEmergency: EmergencyLocation = {
+		  id: crypto.randomUUID(),
+		  witness: {
+			name: formData.name,
+			phoneNumber: formData.phone,
+		  },
+		  emergencyType: formData.emergencyType,
+		  location: {
+			place: formData.location,
+			lat: 49.2827,
+			lng: -123.1207
+		  },
+		  pictureLink: formData.imageUrl || "/api/placeholder/400/300", 
+		  comment: formData.comments,
+		  time: currentTime,
+		  formattedTime: new Date().toLocaleString(),
+		  status: "OPEN"
+		};
+	  
+		addLocation(newEmergency);
 		setIsDialogOpen(false);
 		setFormData({
-			emergencyType: "",
-			location: "",
-			name: "",
-			phone: "",
-			comments: "",
+		  emergencyType: "",
+		  location: "",
+		  name: "",
+		  phone: "",
+		  comments: "",
+		  imageUrl: "",
 		});
-	};
-
+		setPreviewUrl('');
+		setImageFile(null);
+	  };
+		
 	const handleInputChange = (field: string, value: string) => {
 		setFormData((prev) => ({
 			...prev,
 			[field]: value,
 		}));
 	};
+
+	
 
 	return (
 		<>
@@ -210,11 +290,8 @@ function App() {
 													<SelectContent>
 														<SelectItem value="fire">Fire</SelectItem>
 														<SelectItem value="medical">Medical</SelectItem>
-														<SelectItem value="accident">
-															Vehicle Accident
-														</SelectItem>
-														<SelectItem value="crime">
-															Crime in Progress
+														<SelectItem value="shooting">
+															Shooting
 														</SelectItem>
 													</SelectContent>
 												</Select>
@@ -255,18 +332,76 @@ function App() {
 													placeholder="(604) 555-0123"
 												/>
 											</div>
-
 											<div className="space-y-2">
-												<Label htmlFor="details">Additional comments</Label>
+											<Label>Image</Label>
+											<div className="flex space-x-2 mb-2">
+												<Button
+												type="button"
+												variant={imageUploadMethod === 'url' ? 'default' : 'outline'}
+												onClick={() => setImageUploadMethod('url')}
+												className="flex-1"
+												>
+												URL
+												</Button>
+												<Button
+												type="button"
+												variant={imageUploadMethod === 'upload' ? 'default' : 'outline'}
+												onClick={() => setImageUploadMethod('upload')}
+												className="flex-1"
+												>
+												<Upload className="w-4 h-4 mr-2" />
+												Upload
+												</Button>
+											</div>
+
+											{imageUploadMethod === 'url' ? (
+												<Input
+												type="url"
+												placeholder="Enter image URL"
+												value={formData.imageUrl}
+												onChange={(e) => handleUrlInput(e.target.value)}
+												/>
+											) : (
+												<div className="border-2 border-dashed rounded-lg p-4 text-center">
+												<input
+													type="file"
+													accept="image/*"
+													className="hidden"
+													id="image-upload"
+													onChange={handleImageUpload}
+												/>
+												<label 
+													htmlFor="image-upload" 
+													className="cursor-pointer flex flex-col items-center"
+												>
+													<Camera className="w-8 h-8 mb-2 text-muted-foreground" />
+													<span className="text-sm text-muted-foreground">
+													Click to upload image
+													</span>
+												</label>
+												</div>
+											)}
+											{previewUrl && (
+												<div className="mt-2">
+												<img 
+													src={previewUrl} 
+													alt="Preview" 
+													className="max-w-full h-48 object-cover rounded-md"
+													onError={() => setPreviewUrl('')}
+												/>
+												</div>
+											)}
+											</div>
+              
+											<div className="space-y-2">
+												<Label htmlFor="comments">Additional comments</Label>
 												<Textarea
-													id="details"
+													id="comments"
 													value={formData.comments}
 													onChange={(e) =>
-														handleInputChange("details", e.target.value)
+														handleInputChange("comments", e.target.value)
 													}
-													placeholder="Please provide any additional information..."
-													className="h-24"
-												/>
+													placeholder="Please provide any additional information..."/>
 											</div>
 											<div className="flex gap-2 pt-4 justify-between">
 												<Button
