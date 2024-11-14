@@ -4,7 +4,7 @@ import { type EmergencyLocation, useLocations } from "./hooks/locations";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -114,9 +114,35 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 							</SheetHeader>
 							<SheetDescription>
 								<Card>
-									<CardContent>
-										<img src={location.pictureLink} alt="Incident" />
-									</CardContent>
+                                    <CardContent className="space-y-4">
+                                        <img src={location.pictureLink} alt="Incident" className="mb-4"/>
+                                        <div className="space-y-2">
+                                            <div>
+                                                <p className="text-l font-bold">Location:</p>
+                                                <p>{location.location.place}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-l font-bold">Time:</p>
+                                                <p>{location.formattedTime}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-l font-bold">Witness Name:</p>
+                                                <p>{location.witness.name}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-l font-bold">Witness Phone Number:</p>
+                                                <p>{location.witness.phoneNumber}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-l font-bold">Comment:</p>
+                                                <p>{location.comment}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-l font-bold">Status:</p>
+                                                <p>{location.status}</p>
+                                            </div>
+                                        </div>
+                                    </CardContent>
 								</Card>
 							</SheetDescription>
 						</SheetContent>
