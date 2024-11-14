@@ -4,7 +4,7 @@ import { type EmergencyLocation, useLocations } from "./hooks/locations";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -21,6 +21,11 @@ import {
 } from "@/components/ui/sheet";
 import { LineChart, ListCheck, MoreVertical, Trash2 } from "lucide-react";
 import { checkPassword } from "./lib/MD5";
+
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
+import { MapPin, Clock, User, Phone, MessageSquare, AlertTriangle } from 'lucide-react'
+
 
 export const columns: ColumnDef<EmergencyLocation>[] = [
 	{
@@ -108,45 +113,80 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 						</DropdownMenuContent>
 					</DropdownMenu>
 					<Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-						<SheetContent style={{ zIndex: 1000 }}>
+						<SheetContent className="w-[400px] sm:w-[540px]">
 							<SheetHeader>
-								<SheetTitle>Incident Details</SheetTitle>
+							<SheetTitle>Incident Details</SheetTitle>
 							</SheetHeader>
-							<SheetDescription>
-								<Card>
-                                    <CardContent className="space-y-4">
-                                        <img src={location.pictureLink} alt="Incident" className="mb-4"/>
-                                        <div className="space-y-2">
-                                            <div>
-                                                <p className="text-l font-bold">Location:</p>
-                                                <p>{location.location.place}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-l font-bold">Time:</p>
-                                                <p>{location.formattedTime}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-l font-bold">Witness Name:</p>
-                                                <p>{location.witness.name}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-l font-bold">Witness Phone Number:</p>
-                                                <p>{location.witness.phoneNumber}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-l font-bold">Comment:</p>
-                                                <p>{location.comment}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-l font-bold">Status:</p>
-                                                <p>{location.status}</p>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-								</Card>
-							</SheetDescription>
+							<ScrollArea className="h-[calc(100vh-80px)] pr-4">
+							<Card>
+								<CardHeader>
+								</CardHeader>
+								<CardContent className="space-y-6">
+								<div className="aspect-video overflow-hidden rounded-md">
+									<img 
+									src={location.pictureLink} 
+									alt="Incident" 
+									className="object-cover w-full h-full"
+									/>
+								</div>
+								<div className="grid gap-4">
+									<div className="flex items-center space-x-4">
+									<MapPin className="w-5 h-5 text-muted-foreground" />
+									<div>
+										<p className="text-sm font-medium">Location</p>
+										<p className="text-sm text-muted-foreground">{location.location.place}</p>
+									</div>
+									</div>
+									<Separator />
+									<div className="flex items-center space-x-4">
+									<Clock className="w-5 h-5 text-muted-foreground" />
+									<div>
+										<p className="text-sm font-medium">Time Reported</p>
+										<p className="text-sm text-muted-foreground">{location.formattedTime}</p>
+									</div>
+									</div>
+									<Separator />
+									<div className="flex items-center space-x-4">
+									<User className="w-5 h-5 text-muted-foreground" />
+									<div>
+										<p className="text-sm font-medium">Witness Name</p>
+										<p className="text-sm text-muted-foreground">{location.witness.name}</p>
+									</div>
+									</div>
+									<Separator />
+									<div className="flex items-center space-x-4">
+									<Phone className="w-5 h-5 text-muted-foreground" />
+									<div>
+										<p className="text-sm font-medium">Witness Phone Number</p>
+										<p className="text-sm text-muted-foreground">{location.witness.phoneNumber}</p>
+									</div>
+									</div>
+									<Separator />
+									<div className="flex items-start space-x-4">
+									<MessageSquare className="w-5 h-5 text-muted-foreground mt-0.5" />
+									<div>
+										<p className="text-sm font-medium">Comment</p>
+										<p className="text-sm text-muted-foreground">{location.comment}</p>
+									</div>
+									</div>
+									<Separator />
+									<div className="flex items-center space-x-4">
+									<AlertTriangle className="w-5 h-5 text-muted-foreground" />
+									<div>
+										<p className="text-sm font-medium">Status</p>
+										<Badge 
+										variant={location.status.toLowerCase() === 'open' ? 'destructive' : 'outline'}
+										>
+										{location.status}
+										</Badge>
+									</div>
+									</div>
+								</div>
+								</CardContent>
+							</Card>
+							</ScrollArea>
 						</SheetContent>
-					</Sheet>
+						</Sheet>
 				</>
 			);
 		},

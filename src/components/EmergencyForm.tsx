@@ -12,6 +12,11 @@ import {
 } from "@/components/ui/select";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Camera, Upload } from "lucide-react";
+import {
+	type EmergencyLocation,
+	generateRandomEmergencyLocation,
+	useLocations,
+} from "@/hooks/locations";
 
 interface EmergencyFormProps {
     onSubmit: (formData: any) => void;
@@ -30,6 +35,11 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onSubmit, onClose }) => {
     const [imageUploadMethod, setImageUploadMethod] = useState<'url' | 'upload'>('url');
     const [previewUrl, setPreviewUrl] = useState<string>('');
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    const {
+		addLocation,
+	} = useLocations();
 
     const handleInputChange = (field: string, value: string) => {
         setFormData((prev) => ({
@@ -54,9 +64,44 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onSubmit, onClose }) => {
     };
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        onSubmit(formData);
-    };
+		e.preventDefault();
+		
+		const currentTime = Date.now();
+		
+		const newEmergency: EmergencyLocation = {
+		  id: crypto.randomUUID(),
+		  witness: {
+			name: formData.name,
+			phoneNumber: formData.phone,
+		  },
+		  emergencyType: formData.emergencyType,
+		  location: {
+			place: formData.location,
+			lat: 49.2827,
+			lng: -123.1207
+		  },
+		  pictureLink: formData.imageUrl || "/api/placeholder/400/300", 
+		  comment: formData.comments,
+		  time: currentTime,
+		  formattedTime: new Date().toLocaleString(),
+		  status: "OPEN"
+		};
+	  
+		addLocation(newEmergency);
+		setIsDialogOpen(false);
+		setFormData({
+		  emergencyType: "",
+		  location: "",
+		  name: "",
+		  phone: "",
+		  comments: "",
+		  imageUrl: "",
+		});
+		setPreviewUrl('');
+		setImageFile(null);
+
+        onClose();
+	  };
 
     return (
         <DialogContent>
