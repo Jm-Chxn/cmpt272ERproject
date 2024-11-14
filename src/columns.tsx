@@ -115,7 +115,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 					<Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
 						<SheetContent className="w-[400px] sm:w-[540px]">
 							<SheetHeader>
-							<SheetTitle>Incident Details</SheetTitle>
+							<SheetTitle className="font-bold text-2xl">Incident Details</SheetTitle>
 							</SheetHeader>
 							<ScrollArea className="h-[calc(100vh-80px)] pr-4">
 							<Card>
