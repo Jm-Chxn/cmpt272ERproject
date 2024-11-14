@@ -28,7 +28,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Settings2 } from 'lucide-react';
 import React from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -64,28 +64,27 @@ export function DataTable<TData, TValue>({
 		}
 	});
 
+	const columnNames: { [key: string]: string } = {
+		"location.place": "Location",
+		"emergencyType": "Type",
+		"formattedTime": "Time Reported",
+		"status": "Status",
+	};
+
 	return (
 		<div>
 			<div className="flex items-center py-4">
-				{/* <Input
-					placeholder="Filter emails..."
-					value={table.getColumn("email")?.getFilterValue() as string}
-					onChange={(event) =>
-						table.getColumn("email")?.setFilterValue(event.target.value)
-					}
-					className="max-w-sm"
-				/> */}
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant="outline" className="ml-auto">
-							View
+						<Button variant="outline" className="ml-auto px-2 text-">
+							<Settings2 />View
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
 						{table
 							.getAllColumns()
 							.filter(
-								(column) => column.getCanHide()
+								(column) => column.getCanHide() && column.id !== "actions"
 							)
 							.map((column) => {
 								return (
@@ -97,7 +96,7 @@ export function DataTable<TData, TValue>({
 											column.toggleVisibility(!!value)
 										}
 									>
-										{column.id}
+										{columnNames[column.id] || column.id}
 									</DropdownMenuCheckboxItem>
 								)
 							})}
