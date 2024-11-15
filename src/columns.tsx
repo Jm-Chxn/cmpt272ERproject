@@ -36,9 +36,10 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 				<Button
 					variant={getStatusBadgeVariant(status)}
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="border border-transparent hover:border-gray-400 bg-transparent hover:bg-transparent focus-visible:bg-transparent"
 				>
 					Location
-					<ArrowUpDown className="ml-2 h-4 w-4" />
+					<ArrowUpDown className="h-4 w-4" />
 				</Button>
 			)
 		},
@@ -50,9 +51,10 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 				<Button
 					variant={getStatusBadgeVariant(status)}
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="border border-transparent hover:border-gray-400 bg-transparent hover:bg-transparent focus-visible:bg-transparent"
 				>
 					Type
-					<ArrowUpDown className="ml-2 h-4 w-4" />
+					<ArrowUpDown className="h-4 w-4" />
 				</Button>
 			)
 		},
@@ -75,9 +77,10 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 				<Button
 					variant={getStatusBadgeVariant(status)}
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="border border-transparent hover:border-gray-400 bg-transparent hover:bg-transparent focus-visible:bg-transparent"
 				>
 					Time Reported
-					<ArrowUpDown className="ml-2 h-4 w-4" />
+					<ArrowUpDown className="h-4 w-4" />
 				</Button>
 			)
 		},
@@ -89,9 +92,10 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 				<Button
 					variant={getStatusBadgeVariant(status)}
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="border border-transparent hover:border-gray-400 bg-transparent hover:bg-transparent focus-visible:bg-transparent"
 				>
 					Status
-					<ArrowUpDown className="ml-2 h-4 w-4" />
+					<ArrowUpDown className="h-4 w-4" />
 				</Button>
 			)
 		},

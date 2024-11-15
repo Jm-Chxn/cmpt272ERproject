@@ -72,7 +72,8 @@ export function DataTable<TData, TValue>({
 	};
 
 	return (
-		<div>
+		//PLEASE REMOVE THIS COMMENTED CODE WHEN FUNCTIONALITY IS IMPLEMENTED IN NEWLY CREATED BUTTON IN APP.TSX
+		/*<div>
 			<div className="flex items-center py-4">
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -102,7 +103,7 @@ export function DataTable<TData, TValue>({
 							})}
 					</DropdownMenuContent>
 				</DropdownMenu>
-			</div>
+			</div>*/
 			<div className="rounded-md border">
 				<Table>
 					<TableHeader>
@@ -148,6 +149,5 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-		</div>
 	);
 }

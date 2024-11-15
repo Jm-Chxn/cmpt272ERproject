@@ -32,6 +32,16 @@ import {
 	generateRandomEmergencyLocation,
 	useLocations,
 } from "./hooks/locations";
+import {
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Settings2 } from "lucide-react";
+import React from "react";
+import { columns as allColumns } from "./columns";
+
 
 function App() {
 	const {
@@ -136,21 +146,33 @@ function App() {
 								<CardTitle className="text-xl font-bold w-fit">
 									Emergency Reports
 								</CardTitle>
-								<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-									<DialogTrigger asChild>
-										<Button variant="outline" className="ml-auto flex items-center leading-none">
-											<Plus className="h-8 w-8 text-blue-400" />
-											New Report
-										</Button>
-									</DialogTrigger>
-									<EmergencyForm
-										onSubmit={(data) => {
-											addLocation(data);
-											setIsDialogOpen(false);
-										}}
-										onClose={() => setIsDialogOpen(false)}
-									/>
-								</Dialog>
+								<div className="flex justify-end items-center space-x-3">
+									<DropdownMenu>
+										<DropdownMenuTrigger asChild>
+											<Button variant="outline" className="px-2">
+												<Settings2 className="h-8 w-8 text-emerald-500"/>View
+											</Button>
+										</DropdownMenuTrigger>
+										<DropdownMenuContent align="end">
+											{/* Empty for now */}
+										</DropdownMenuContent>
+									</DropdownMenu>
+									<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+										<DialogTrigger asChild>
+											<Button variant="outline" className="flex items-center leading-none">
+												<Plus className="h-8 w-8 text-blue-400" />
+												New Report
+											</Button>
+										</DialogTrigger>
+										<EmergencyForm
+											onSubmit={(data) => {
+												addLocation(data);
+												setIsDialogOpen(false);
+											}}
+											onClose={() => setIsDialogOpen(false)}
+										/>
+									</Dialog>
+								</div>
 							</CardHeader>
 							<CardContent className="h-[50dvh] py-0">
 								<ScrollArea className="h-full overflow-y-auto">
