@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -7,44 +7,20 @@ import {
 	CardContent,
 	CardHeader,
 	CardTitle,
-	CardDescription,
 } from "@/components/ui/card";
-import {
-	AlertTriangle,
-	Heart,
-	Moon,
-	Plus,
-	Siren,
-	Sun,
-	Timer,
-} from "lucide-react";
+import { Moon, Plus, Sun } from "lucide-react";
 import { columns } from "./columns";
 import LeafletMap from "./components/LeafletMap";
 import EmergencyForm from "./components/EmergencyForm";
 import { DataTable } from "./components/ui/data-table";
 import { ScrollArea } from "./components/ui/scroll-area";
-import {
-	Dialog,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-	type EmergencyLocation,
-	generateRandomEmergencyLocation,
-	useLocations,
-} from "./hooks/locations";
-import {
-	DropdownMenu,
-	DropdownMenuCheckboxItem,
-	DropdownMenuContent,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Settings2 } from "lucide-react";
-import React from "react";
-import { columns as allColumns } from "./columns";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { type EmergencyLocation, useLocations } from "./hooks/locations";
 
 import { VisibilityState } from "@tanstack/react-table";
 import { DataTableViewOptions } from "./components/ui/view-options";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from "@tanstack/react-table";
+import { EmergencyStats } from "./components/EmergencyStats";
 
 
 function App() {
@@ -53,19 +29,11 @@ function App() {
 		removeLocation,
 		locations,
 		viewableLocations,
-		getTodaysEmergenciesCount,
 	} = useLocations();
 
 	const [selectedLocation, setSelectedLocation] =
 		useState<EmergencyLocation | null>(null);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-	const openEmergenciesCount = locations.filter(
-		(loc) => loc.status === "OPEN",
-	).length;
-	const resolvedEmergenciesCount = locations.filter(
-		(loc) => loc.status === "RESOLVED",
-	).length;
 
 	const handleRowClick = (location: EmergencyLocation) => {
 		console.log("Row clicked:", location);
@@ -100,54 +68,9 @@ function App() {
 					<h2 className="text-3xl font-bold tracking-tight ml-8">
 						E-Comm Dashboard
 					</h2>
-				</div>
+				</div>  
 				<div className="flex-1 space-y-4 p-8 pt-6">
-					<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-						<Card>
-							<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-								<CardTitle className="text-sm font-medium">
-									Active emergencies:{" "}
-								</CardTitle>
-								<AlertTriangle className="h-4 w-4 text-red-500" />
-							</CardHeader>
-							<CardContent className="text-2xl font-bold text-left">
-								{openEmergenciesCount}
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-								<CardTitle className="text-sm font-medium">
-									Resolved emergencies:{" "}
-								</CardTitle>
-								<Heart className="h-4 w-4 text-green-500" />
-							</CardHeader>
-							<CardContent className="text-2xl font-bold text-left">
-								{resolvedEmergenciesCount}
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-								<CardTitle className="text-sm font-medium">
-									Total emergencies today:{" "}
-								</CardTitle>
-								<Siren className="h-4 w-4 text-orange-500" />
-							</CardHeader>
-							<CardContent className="text-2xl font-bold text-left">
-								{getTodaysEmergenciesCount()}
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-								<CardTitle className="text-sm font-medium">
-									Average Response Time:{" "}
-								</CardTitle>
-								<Timer className="h-4 w-4 text-blue-500" />
-							</CardHeader>
-							<CardContent className="text-2xl font-bold text-left">
-								8.5m
-							</CardContent>
-						</Card>
-					</div>
+					<EmergencyStats />
 					<div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
 						<Card>
 							<CardHeader className="text-left">
