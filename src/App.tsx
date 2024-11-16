@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 
-import { Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -42,6 +42,10 @@ import { Settings2 } from "lucide-react";
 import React from "react";
 import { columns as allColumns } from "./columns";
 
+import { VisibilityState } from "@tanstack/react-table";
+import { DataTableViewOptions } from "./components/ui/view-options";
+import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from "@tanstack/react-table";
+
 
 function App() {
 	const {
@@ -55,7 +59,7 @@ function App() {
 	const [selectedLocation, setSelectedLocation] =
 		useState<EmergencyLocation | null>(null);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
-	
+
 	const openEmergenciesCount = locations.filter(
 		(loc) => loc.status === "OPEN",
 	).length;
@@ -74,6 +78,20 @@ function App() {
 		setIsDarkMode((prev) => !prev);
 		document.body.classList.toggle("dark", !isDarkMode);
 	};
+
+	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+	const table = useReactTable({
+		data: viewableLocations,
+		columns,
+		state: {
+			columnVisibility,
+		},
+		onColumnVisibilityChange: setColumnVisibility,
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+	});
 
 	return (
 		<>
@@ -147,16 +165,17 @@ function App() {
 									Emergency Reports
 								</CardTitle>
 								<div className="flex justify-end items-center space-x-3">
-									<DropdownMenu>
+									{/*<DropdownMenu>
 										<DropdownMenuTrigger asChild>
 											<Button variant="outline" className="flex items-center leading-none">
-												<Settings2 className="h-8 w-8 text-emerald-500"/>View
+												<Settings2 className="h-8 w-8 text-emerald-500" />View
 											</Button>
 										</DropdownMenuTrigger>
 										<DropdownMenuContent align="end">
-											{/* Empty for now */}
-										</DropdownMenuContent>
-									</DropdownMenu>
+											{ Empty for now }
+								</DropdownMenuContent>
+							</DropdownMenu>*/}
+									<DataTableViewOptions table={table} />
 									<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 										<DialogTrigger asChild>
 											<Button variant="outline" className="flex items-center leading-none">
@@ -182,9 +201,9 @@ function App() {
 										onRowClick={handleRowClick}
 									/>
 								</ScrollArea>
-							</CardContent> 
+							</CardContent>
 						</Card>
-					</div>
+					</div >
 					<div className="flex justify-center space-x-2">
 						<Button
 							className="flex items-center"
@@ -205,8 +224,8 @@ function App() {
 							{isDarkMode ? <Moon /> : <Sun />}
 						</Button>
 					</div>
-				</div>
-			</div>
+				</div >
+			</div >
 		</>
 	);
 }

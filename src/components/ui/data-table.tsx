@@ -6,6 +6,7 @@ import {
 	getCoreRowModel,
 	useReactTable,
 	SortingState,
+	getPaginationRowModel,
 	getSortedRowModel,
 	ColumnFiltersState,
 	getFilteredRowModel,
@@ -31,10 +32,13 @@ import { Button } from "@/components/ui/button";
 import { Settings2 } from 'lucide-react';
 import React from "react";
 
+import { DataTableViewOptions } from "./view-options";
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	onRowClick: (data: TData) => void;
+	columnVisibility: VisibilityState;
+	setColumnVisibility: React.Dispatch<React.SetStateAction<VisibilityState>>;
 }
 
 export function DataTable<TData, TValue>({
@@ -61,7 +65,7 @@ export function DataTable<TData, TValue>({
 			sorting,
 			columnFilters,
 			columnVisibility,
-		}
+		},
 	});
 
 	const columnNames: { [key: string]: string } = {
@@ -104,50 +108,52 @@ export function DataTable<TData, TValue>({
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>*/
-			<div className="rounded-md border">
-				<Table>
-					<TableHeader>
-						{table.getHeaderGroups().map((headerGroup) => (
-							<TableRow key={headerGroup.id}>
-								{headerGroup.headers.map((header) => {
-									return (
-										<TableHead key={header.id} className="text-center">
-											{header.isPlaceholder
-												? null
-												: flexRender(
-													header.column.columnDef.header,
-													header.getContext(),
-												)}
-										</TableHead>
-									);
-								})}
+		<div className="rounded-md border">
+			{/* testing: only working view option */}
+			<DataTableViewOptions table={table} />
+			<Table>
+				<TableHeader>
+					{table.getHeaderGroups().map((headerGroup) => (
+						<TableRow key={headerGroup.id}>
+							{headerGroup.headers.map((header) => {
+								return (
+									<TableHead key={header.id} className="text-center">
+										{header.isPlaceholder
+											? null
+											: flexRender(
+												header.column.columnDef.header,
+												header.getContext(),
+											)}
+									</TableHead>
+								);
+							})}
+						</TableRow>
+					))}
+				</TableHeader>
+				<TableBody>
+					{table.getRowModel().rows?.length ? (
+						table.getRowModel().rows.map((row) => (
+							<TableRow
+								key={row.id}
+								data-state={row.getIsSelected() && "selected"}
+								onClick={() => onRowClick(row.original)}
+							>
+								{row.getVisibleCells().map((cell) => (
+									<TableCell key={cell.id}>
+										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+									</TableCell>
+								))}
 							</TableRow>
-						))}
-					</TableHeader>
-					<TableBody>
-						{table.getRowModel().rows?.length ? (
-							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && "selected"}
-									onClick={() => onRowClick(row.original)}
-								>
-									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
-										</TableCell>
-									))}
-								</TableRow>
-							))
-						) : (
-							<TableRow>
-								<TableCell colSpan={columns.length} className="h-24 text-center">
-									No results.
-								</TableCell>
-							</TableRow>
-						)}
-					</TableBody>
-				</Table>
-			</div>
+						))
+					) : (
+						<TableRow>
+							<TableCell colSpan={columns.length} className="h-24 text-center">
+								No results.
+							</TableCell>
+						</TableRow>
+					)}
+				</TableBody>
+			</Table>
+		</div >
 	);
 }
