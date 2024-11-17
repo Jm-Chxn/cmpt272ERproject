@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
     Select,
     SelectContent,
@@ -19,11 +20,16 @@ import {
 } from "@/hooks/locations";
 
 interface EmergencyFormProps {
-    onSubmit: (formData: any) => void;
     onClose: () => void;
 }
 
-const EmergencyForm: React.FC<EmergencyFormProps> = ({ onSubmit, onClose }) => {
+const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
+
+    const validatePhoneNumber = (phone: string) => {
+        const cleaned = phone.replace(/\D/g, '');
+        return cleaned.length === 10;
+    };
+
     const [formData, setFormData] = useState({
         emergencyType: "",
         location: "",
@@ -65,7 +71,11 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onSubmit, onClose }) => {
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		
+
+        if (!validatePhoneNumber(formData.phone)) {
+            alert("Please enter a valid 10-digit phone number");
+            return;
+        }
 		const currentTime = Date.now();
 		
 		const newEmergency: EmergencyLocation = {
@@ -102,13 +112,14 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onSubmit, onClose }) => {
 
         onClose();
 	  };
-
+      
     return (
-        <DialogContent>
+        <DialogContent className="h-[90vh] max-h-screen overflow-hidden">
             <DialogHeader>
                 <DialogTitle>Report Emergency</DialogTitle>
                 <DialogDescription>Please provide details about the emergency.</DialogDescription>
             </DialogHeader>
+            <ScrollArea className="h-full pr-4" >
             <form onSubmit={handleFormSubmit} className="space-y-4">
                 {/* Emergency Type */}
                 <div className="space-y-2">
@@ -158,10 +169,15 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onSubmit, onClose }) => {
                         value={formData.phone}
                         onChange={(e) => handleInputChange("phone", e.target.value)}
                         placeholder="(604) 555-0123"
+                        maxLength={14}
+                        className={!validatePhoneNumber(formData.phone) && formData.phone.length > 0 ? "border-red-500" : ""}
                     />
+                    {!validatePhoneNumber(formData.phone) && formData.phone.length > 0 && (
+                        <p className="text-sm text-red-500">Please enter a valid 10-digit phone number</p>
+                    )}
                 </div>
 
-                {/* Image Upload BROKEN FIX PLS JIMMY*/}
+                {/* Image Upload */}
                 <div className="space-y-2">
                     <Label>Image</Label>
                     <div className="flex space-x-2 mb-2">
@@ -241,7 +257,9 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onSubmit, onClose }) => {
                     <Button type="submit">Submit Report</Button>
                 </div>
             </form>
+            </ScrollArea>
         </DialogContent>
+        
     );
 };
 
