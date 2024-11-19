@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { type EmergencyLocation, useLocations } from "./hooks/locations";
+import { useFormattedTime } from "./hooks/ui-hooks";
 import { IncidentDetails } from "./components/IncidentDetails";
 import { Dialog } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
@@ -83,14 +84,8 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 		},
 		cell: ({ row }) => {
 			const time = row.getValue("time") as number;
-			return (
-				<Badge
-					variant="outline"
-					className="rounded-full px-3 py-0.5 text-xs font-semibold"
-				>
-					{new Date(time).toLocaleTimeString()}
-				</Badge>
-			);
+			const formattedTime = useFormattedTime(time);
+			return <span>{formattedTime}</span>;
 		},
 	},
 	{
