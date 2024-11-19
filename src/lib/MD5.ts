@@ -1,4 +1,4 @@
-const password = "76487c30fc324c2e9b3ed92caeb5126a"; // password: cmpt272
+const PASSWORD_HASH = "76487c30fc324c2e9b3ed92caeb5126a"; // password: cmpt272
 
 async function getMD5Hash(data: string): Promise<string> {
 	const response = await fetch("https://api.hashify.net/hash/md5/hex", {
@@ -27,7 +27,7 @@ export async function checkPassword(): Promise<boolean> {
 
 	try {
 		const hash = await getMD5Hash(userPassword);
-		if (hash === password) {
+		if (hash === PASSWORD_HASH) {
 			return true;
 		} else {
 			alert("Invalid Password");
