@@ -60,38 +60,6 @@ export function DataTable<TData, TValue>({
 	});
 
 	return (
-		//PLEASE REMOVE THIS COMMENTED CODE WHEN FUNCTIONALITY IS IMPLEMENTED IN NEWLY CREATED BUTTON IN APP.TSX
-		/*<div>
-			<div className="flex items-center py-4">
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button variant="outline" className="ml-auto px-2 text-">
-							<Settings2 />View
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						{table
-							.getAllColumns()
-							.filter(
-								(column) => column.getCanHide() && column.id !== "actions"
-							)
-							.map((column) => {
-								return (
-									<DropdownMenuCheckboxItem
-										key={column.id}
-										className="capitalize"
-										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
-									>
-										{columnNames[column.id] || column.id}
-									</DropdownMenuCheckboxItem>
-								)
-							})}
-					</DropdownMenuContent>
-				</DropdownMenu>
-			</div>*/
 		<div className="rounded-md border">
 			{/* testing: only working view option */}
 			<DataTableViewOptions table={table} />
