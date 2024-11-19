@@ -37,12 +37,12 @@ export function DataTable<TData, TValue>({
 	data,
 	onRowClick,
 }: DataTableProps<TData, TValue>) {
-	const [sorting, setSorting] = React.useState<SortingState>([])
+	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-		[]
-	)
+		[],
+	);
 	const [columnVisibility, setColumnVisibility] =
-		React.useState<VisibilityState>({})
+		React.useState<VisibilityState>({});
 	const table = useReactTable({
 		data,
 		columns,
@@ -105,9 +105,9 @@ export function DataTable<TData, TValue>({
 										{header.isPlaceholder
 											? null
 											: flexRender(
-												header.column.columnDef.header,
-												header.getContext(),
-											)}
+													header.column.columnDef.header,
+													header.getContext(),
+												)}
 									</TableHead>
 								);
 							})}
@@ -138,6 +138,6 @@ export function DataTable<TData, TValue>({
 					)}
 				</TableBody>
 			</Table>
-		</div >
+		</div>
 	);
 }

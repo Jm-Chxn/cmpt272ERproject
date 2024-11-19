@@ -69,7 +69,7 @@ const LeafletMap = () => {
 				zoom={zoom}
 				scrollWheelZoom={true}
 				style={{
-          			zIndex: "1",
+					zIndex: "1",
 					height: "50vh",
 					width: "100vh",
 					display: "block",

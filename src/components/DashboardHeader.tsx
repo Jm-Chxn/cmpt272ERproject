@@ -23,7 +23,7 @@ const DashboardHeader = () => {
 				Emergency Dashboard
 			</h2>
 			<div className="flex items-center gap-4 mr-8">
-        <LiveClock />
+				<LiveClock />
 				<Button variant="secondary">
 					<Users />
 					Active: 8
