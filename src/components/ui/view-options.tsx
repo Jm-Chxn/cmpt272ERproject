@@ -21,7 +21,7 @@ export function DataTableViewOptions<TData>({
     const columnNames: { [key: string]: string } = {
         "location.place": "Location",
         "emergencyType": "Type",
-        "formattedTime": "Time Reported",
+        "time": "Time Reported",
         "status": "Status",
     };
 

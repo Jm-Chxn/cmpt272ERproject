@@ -93,7 +93,6 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 			pictureLink: formData.imageUrl || "/api/placeholder/400/300",
 			comment: formData.comments,
 			time: currentTime,
-			formattedTime: currentTime.toLocaleString(),
 			status: "OPEN",
 		};
 
