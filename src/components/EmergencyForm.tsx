@@ -136,9 +136,9 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 								<SelectValue placeholder="Select type of emergency" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="fire">Fire</SelectItem>
-								<SelectItem value="medical">Medical</SelectItem>
-								<SelectItem value="shooting">Shooting</SelectItem>
+								<SelectItem value="Fire">Fire</SelectItem>
+								<SelectItem value="Medical">Medical</SelectItem>
+								<SelectItem value="Shooting">Shooting</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>
