@@ -71,10 +71,6 @@ const EmergencyManagement = () => {
 								</Button>
 							</DialogTrigger>
 							<EmergencyForm
-								onSubmit={(data) => {
-									addLocation(data);
-									setIsDialogOpen(false);
-								}}
 								onClose={() => setIsDialogOpen(false)}
 							/>
 						</Dialog>
