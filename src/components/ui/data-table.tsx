@@ -6,7 +6,6 @@ import {
 	getCoreRowModel,
 	useReactTable,
 	SortingState,
-	getPaginationRowModel,
 	getSortedRowModel,
 	ColumnFiltersState,
 	getFilteredRowModel,
@@ -22,14 +21,6 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 
-import {
-	DropdownMenu,
-	DropdownMenuCheckboxItem,
-	DropdownMenuContent,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button";
-import { Settings2 } from 'lucide-react';
 import React from "react";
 
 import { DataTableViewOptions } from "./view-options";
@@ -67,13 +58,6 @@ export function DataTable<TData, TValue>({
 			columnVisibility,
 		},
 	});
-
-	const columnNames: { [key: string]: string } = {
-		"location.place": "Location",
-		"emergencyType": "Type",
-		"time": "Time Reported",
-		"status": "Status",
-	};
 
 	return (
 		//PLEASE REMOVE THIS COMMENTED CODE WHEN FUNCTIONALITY IS IMPLEMENTED IN NEWLY CREATED BUTTON IN APP.TSX

@@ -10,7 +10,7 @@ interface PasswordPromptProps {
 }
 
 export const PasswordPrompt: React.FC<PasswordPromptProps> = ({ location, onClose }) => {
-    const { markAsResolved, removeLocation } = useLocations();
+    const { removeLocation } = useLocations();
 
     return (
         <DialogContent>

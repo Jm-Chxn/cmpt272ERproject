@@ -42,8 +42,8 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 		"url",
 	);
 	const [previewUrl, setPreviewUrl] = useState<string>("");
-	const [imageFile, setImageFile] = useState<File | null>(null);
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [_imageFile, setImageFile] = useState<File | null>(null);
+	const [_isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const { addLocation } = useLocations();
 
