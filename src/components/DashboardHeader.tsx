@@ -20,7 +20,7 @@ const DashboardHeader = () => {
 	return (
 		<div className="flex items-center justify-between">
 			<h2 className="text-3xl font-bold tracking-tight ml-8">
-				E-Comm Dashboard
+				Emergency Dashboard
 			</h2>
 			<div className="flex items-center gap-4 mr-8">
         <LiveClock />
