@@ -3,10 +3,10 @@ import "./App.css";
 import DashboardStats from "./components/DashboardStats";
 import DashboardHeader from "./components/DashboardHeader";
 import EmergencyManagement from "./components/EmergencyManagement";
+import AddButton from "./components/AddButton";
 import RemoveButton from "./components/RemoveButton";
 
 function App() {
-
 	return (
 		<div className="flex flex-col min-h-screen gap-2">
 			<DashboardHeader />
@@ -14,7 +14,8 @@ function App() {
 				<DashboardStats />
 				<EmergencyManagement />
 				<div className="flex justify-center space-x-2">
-          <RemoveButton />
+					<AddButton />
+					<RemoveButton />
 				</div>
 			</div>
 		</div>
