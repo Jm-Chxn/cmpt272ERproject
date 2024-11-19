@@ -1,10 +1,4 @@
 import { useState, useEffect } from "react";
-import {
-	type EmergencyLocation,
-} from "@/hooks/locations";
-
-export const [selectedLocation, setSelectedLocation] =
-useState<EmergencyLocation | null>(null);
 
 export const useDarkMode = () => {
     const [isDarkMode, setIsDarkMode] = useState(true);
@@ -30,9 +24,3 @@ export const useTime = () => {
 
     return currentTime;
 };
-
-export const handleRowClick = (location: EmergencyLocation) => {
-    console.log("Row clicked:", location);
-    setSelectedLocation(location);
-};
-

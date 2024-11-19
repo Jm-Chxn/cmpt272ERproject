@@ -12,15 +12,18 @@ import {
 	useLocations,
 } from "../hooks/locations";
 import { useState } from "react";
-import { handleRowClick } from "../hooks/ui-hooks";
 import { columns } from "@/columns";
 
 const EmergencyManagement = () => {
     const { addLocation, viewableLocations } = useLocations();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const [selectedLocation, setSelectedLocation] =
-    useState<EmergencyLocation | null>(null);
+    const [selectedLocation, setSelectedLocation] = useState<EmergencyLocation | null>(null);
+
+    const handleRowClick = (location: EmergencyLocation) => {
+        console.log("Row clicked:", location);
+        setSelectedLocation(location);
+    };
 
     return (
         <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
