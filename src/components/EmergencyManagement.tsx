@@ -13,12 +13,14 @@ import {
 } from "../hooks/locations";
 import { useState } from "react";
 import { columns } from "@/columns";
+import { useLocalStorage } from "usehooks-ts";
 
 const EmergencyManagement = () => {
     const { addLocation, viewableLocations } = useLocations();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const [selectedLocation, setSelectedLocation] = useState<EmergencyLocation | null>(null);
+	const [_selectedLocation, setSelectedLocation] =
+		useLocalStorage<EmergencyLocation | null>("selectedLocation", null);
 
     const handleRowClick = (location: EmergencyLocation) => {
         console.log("Row clicked:", location);
@@ -32,7 +34,7 @@ const EmergencyManagement = () => {
                     <CardTitle className="text-xl font-bold">Emergency Location Map</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <LeafletMap selectedLocation={selectedLocation}/>
+                    <LeafletMap />
                 </CardContent>
             </Card>
             <Card>
