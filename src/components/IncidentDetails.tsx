@@ -31,7 +31,7 @@ export const IncidentDetails: React.FC<{ location: EmergencyLocation }> = ({ loc
                         <Clock className="w-5 h-5 text-muted-foreground" />
                         <div>
                             <p className="text-sm font-medium">Time Reported</p>
-                            <p className="text-sm text-muted-foreground">{location.formattedTime}</p>
+                            <p className="text-sm text-muted-foreground">{new Date(location.time).toLocaleString()}</p>
                         </div>
                     </div>
                     <Separator />
