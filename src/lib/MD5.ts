@@ -17,11 +17,8 @@ async function getMD5Hash(data: string): Promise<string> {
 	return result.Digest;
 }
 
-export async function checkPassword(): Promise<boolean> {
-	const userPassword: string | null = prompt("Enter Password:");
-
+export async function checkPassword(userPassword: string | null): Promise<boolean> {
 	if (!userPassword) {
-		alert("Invalid Password");
 		return false;
 	}
 
@@ -30,7 +27,6 @@ export async function checkPassword(): Promise<boolean> {
 		if (hash === PASSWORD_HASH) {
 			return true;
 		} else {
-			alert("Invalid Password");
 			return false;
 		}
 	} catch (error) {

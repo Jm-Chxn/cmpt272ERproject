@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
-import { type EmergencyLocation, useLocations } from "./hooks/locations";
+import { type EmergencyLocation } from "./hooks/locations";
 import { useFormattedTime } from "./hooks/ui-hooks";
 import { IncidentDetails } from "./components/IncidentDetails";
 import { Dialog } from "@/components/ui/dialog";
@@ -20,7 +20,6 @@ import {
     SheetTitle,
 } from "@/components/ui/sheet";
 import { LineChart, ListCheck, MoreVertical, Trash2 } from "lucide-react";
-import { checkPassword } from "./lib/MD5";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ArrowUpDown } from "lucide-react";

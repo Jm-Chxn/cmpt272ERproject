@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import {
     DialogContent,
     DialogHeader,
-    DialogFooter,
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { checkPassword } from "@/lib/MD5";
 import { useLocations } from "@/hooks/locations";
+import { useRef } from "react";
 
 interface PasswordPromptProps {
     location: EmergencyLocation;
@@ -21,39 +22,46 @@ export const PasswordPrompt: React.FC<PasswordPromptProps> = ({
     onClose,
     isDelete
 }) => {
-    const { removeLocation } = useLocations();
+
+    const { removeLocation, markAsResolved } = useLocations();
+    const passwordRef = useRef<HTMLInputElement>(null);
 
     return (
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>
-                    {
-                        isDelete ? "Confirm Delete" : "Confirm Resolved"
-                    }
+                    {isDelete ? "Confirm Delete" : "Confirm Resolved"}
                 </DialogTitle>
                 <DialogDescription>
-                    {
-                        isDelete ? "Are you sure you want to delete this location? This action cannot be undone." :
-                            "Are you sure you want to mark this location as resolved? This action cannot be undone."
+                    {isDelete ? "Are you sure you want to delete this location? This action cannot be undone." :
+                        "Are you sure you want to mark this location as resolved? This action cannot be undone."
                     }
                 </DialogDescription>
             </DialogHeader>
-            <DialogFooter>
-                <Button variant="outline" onClick={onClose}>
-                    Cancel
-                </Button>
-                <Button
-                    variant="destructive"
-                    onClick={async () => {
-                        if (await checkPassword()) {
-                            removeLocation(location);
-                            onClose();
-                        }
-                    }}
-                >
+            <form className="flex items-center gap-4"
+                onSubmit={async (e) => {
+                    e.preventDefault();
+                    const password = passwordRef.current?.value;
+                    if(!password) return;
+                    if (await checkPassword(password)) {
+                        isDelete ? removeLocation(location) : markAsResolved(location.id);
+                        onClose();
+                    } else {
+                        alert("Invalid Password!");
+                    }
+                }}
+            >
+                <Input
+                    className="w-full"
+                    id="password"
+                    type="text"
+                    ref={passwordRef}
+                    placeholder="Enter Password"
+                />
+                <Button type="submit" variant={"destructive"}>
                     {isDelete ? "Delete" : "Resolve"}
                 </Button>
-            </DialogFooter>
+            </form>
         </DialogContent>
     );
-};
+}
