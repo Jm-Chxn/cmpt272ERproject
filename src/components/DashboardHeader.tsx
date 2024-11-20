@@ -1,46 +1,51 @@
 import { Button } from "@/components/ui/button";
 import { Clock, Moon, Sun, Users } from "lucide-react";
 import { useDarkMode, useTime } from "@/hooks/ui-hooks";
-
-const LiveClock = () => {
-	const currentTime = useTime();
-	return (
-		<Button variant="secondary">
-			<Clock />
-			{currentTime}
-		</Button>
-	);
-};
+import { useState, useEffect } from "react";
 
 const DashboardHeader = () => {
-	const { isDarkMode, toggleDarkMode } = useDarkMode();
+    const { isDarkMode, toggleDarkMode } = useDarkMode();
+    const currentTime = useTime();
 
-	console.log("isDarkMode:", isDarkMode); // Logs dark mode status
+    const [activeUsers, emulateActiveUsers] = useState(8);
 
-	return (
-		<div className="flex items-center justify-between">
-			<h2 className="text-3xl font-bold tracking-tight ml-8">
-				Emergency Dashboard
-			</h2>
-			<div className="flex items-center gap-4 mr-8">
-				<LiveClock />
-				<Button variant="secondary">
-					<Users />
-					Active: 8
-				</Button>
-				<Button
-					onClick={() => {
-						console.log("Dark mode button clicked");
-						toggleDarkMode();
-					}}
-					variant="secondary"
-					className="ml-auto flex items-center"
-				>
-					{isDarkMode ? <Moon /> : <Sun />}
-				</Button>
-			</div>
-		</div>
-	);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            emulateActiveUsers((prev) => {
+                const change = Math.random() < 0.5 ? -1 : 1;
+                return Math.max(1, prev + change);
+            });
+        }, Math.random() * 10000 + 20000); // Random interval between 20-30 seconds
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold tracking-tight ml-8">E-Comm Dashboard</h2>
+            <div className="flex items-center gap-4 mr-8">
+                <Button variant="secondary">
+                    <Clock />
+                    {currentTime}
+                </Button>
+                <Button variant="secondary">
+                    <Users />
+                    Active: {activeUsers}
+                </Button>
+                <Button
+                    onClick={() => {
+                        console.log("Dark mode button clicked");
+                        toggleDarkMode();
+                    }}
+                    variant="secondary"
+                    className="ml-auto flex items-center"
+                >
+                    {isDarkMode ? <Moon /> : <Sun />}
+                </Button>
+            </div>
+        </div>
+    );
 };
+
 
 export default DashboardHeader;

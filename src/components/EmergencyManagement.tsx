@@ -17,7 +17,7 @@ import { columns } from "@/columns";
 import { useLocalStorage } from "usehooks-ts";
 
 const EmergencyManagement = () => {
-	const { addLocation, viewableLocations } = useLocations();
+	const { viewableLocations } = useLocations();
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const [_selectedLocation, setSelectedLocation] =
@@ -70,13 +70,7 @@ const EmergencyManagement = () => {
 									New Report
 								</Button>
 							</DialogTrigger>
-							<EmergencyForm
-								onSubmit={(data) => {
-									addLocation(data);
-									setIsDialogOpen(false);
-								}}
-								onClose={() => setIsDialogOpen(false)}
-							/>
+							<EmergencyForm onClose={() => setIsDialogOpen(false)} />
 						</Dialog>
 					</div>
 				</CardHeader>

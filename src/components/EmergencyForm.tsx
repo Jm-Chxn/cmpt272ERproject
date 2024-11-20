@@ -27,7 +27,7 @@ interface EmergencyFormProps {
 const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 	const validatePhoneNumber = (phone: string) => {
 		const cleaned = phone.replace(/\D/g, "");
-		return cleaned.length === 10;
+		return cleaned.length;
 	};
 
 	const [formData, setFormData] = useState({
@@ -72,7 +72,7 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 	const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!validatePhoneNumber(formData.phone)) {
+		if (validatePhoneNumber(formData.phone) !== 10) {
 			alert("Please enter a valid 10-digit phone number");
 			return;
 		}
@@ -183,10 +183,10 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 									: ""
 							}
 						/>
-						{!validatePhoneNumber(formData.phone) &&
+						{validatePhoneNumber(formData.phone) !== 10 &&
 							formData.phone.length > 0 && (
 								<p className="text-sm text-red-500">
-									Please enter a valid 10-digit phone number
+									{`Please ${formData.phone.length < 10 ? 'add' : 'remove'} ${Math.abs(10 - formData.phone.length)} character${Math.abs(10 - formData.phone.length) !== 1 ? 's' : ''} to make it a 10-digit phone number`}
 								</p>
 							)}
 					</div>
