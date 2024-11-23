@@ -13,7 +13,9 @@ function App() {
 			<div className="flex-1 space-y-4 p-8 pt-6">
 				<DashboardStats />
 				<EmergencyManagement />
-				<div className="flex justify-center space-x-2">
+        {/* Only use for marking project, removed in actual usage */}        
+				<div className="flex justify-center space-x-4">
+					<p>For marker convenience only {"->"}</p>
 					<AddButton />
 					<RemoveButton />
 				</div>
