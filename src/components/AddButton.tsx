@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
-	useLocations,
 	generateRandomEmergencyLocation,
+	useLocations,
 } from "@/hooks/locations";
 
 const RemoveButton = () => {

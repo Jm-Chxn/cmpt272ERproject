@@ -1,9 +1,9 @@
 import type { Marker as LeafletMarker } from "leaflet";
 import { useEffect, useRef } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { useLocalStorage } from "usehooks-ts";
 import { type EmergencyLocation, useLocations } from "../hooks/locations.ts";
 import { useViewCoordinates } from "../hooks/viewCoordinates.ts";
-import { useLocalStorage } from "usehooks-ts";
 
 const MapController = ({
 	markersRef,
@@ -93,7 +93,7 @@ const LeafletMap = () => {
 						}}
 					>
 						<Popup autoPan={false}>
-              {/* <img src={location.pictureLink} className="w-full aspect-auto" /> */}
+							{/* <img src={location.pictureLink} className="w-full aspect-auto" /> */}
 							<div className="text-xl font-bold">{location.location.place}</div>
 							<div
 								className={`text-md font-bold ${location.status !== "OPEN" ? "text-green-500" : "text-red-500"}`}

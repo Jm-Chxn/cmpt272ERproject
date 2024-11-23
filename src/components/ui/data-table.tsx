@@ -2,14 +2,14 @@
 
 import {
 	type ColumnDef,
+	type ColumnFiltersState,
+	type SortingState,
+	type VisibilityState,
 	flexRender,
 	getCoreRowModel,
-	useReactTable,
-	SortingState,
-	getSortedRowModel,
-	ColumnFiltersState,
 	getFilteredRowModel,
-	VisibilityState,
+	getSortedRowModel,
+	useReactTable,
 } from "@tanstack/react-table";
 
 import {

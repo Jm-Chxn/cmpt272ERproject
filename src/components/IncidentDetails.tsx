@@ -1,15 +1,15 @@
-import { type EmergencyLocation } from "@/hooks/locations";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-	MapPin,
-	Clock,
-	User,
-	Phone,
-	MessageSquare,
-	AlertTriangle,
-} from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import type { EmergencyLocation } from "@/hooks/locations";
+import {
+	AlertTriangle,
+	Clock,
+	MapPin,
+	MessageSquare,
+	Phone,
+	User,
+} from "lucide-react";
 
 export const IncidentDetails: React.FC<{ location: EmergencyLocation }> = ({
 	location,

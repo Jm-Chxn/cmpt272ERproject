@@ -17,7 +17,9 @@ async function getMD5Hash(data: string): Promise<string> {
 	return result.Digest;
 }
 
-export async function checkPassword(userPassword: string | null): Promise<boolean> {
+export async function checkPassword(
+	userPassword: string | null,
+): Promise<boolean> {
 	if (!userPassword) {
 		return false;
 	}

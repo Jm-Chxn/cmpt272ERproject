@@ -1,8 +1,12 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	Select,
@@ -11,14 +15,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import {
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogDescription,
-} from "@/components/ui/dialog";
-import { Camera, Upload } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { type EmergencyLocation, useLocations } from "@/hooks/locations";
+import { Camera, Upload } from "lucide-react";
+import { useState } from "react";
 
 interface EmergencyFormProps {
 	onClose: () => void;
@@ -186,7 +186,7 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 						{validatePhoneNumber(formData.phone) !== 10 &&
 							formData.phone.length > 0 && (
 								<p className="text-sm text-red-500">
-									{`Please ${formData.phone.length < 10 ? 'add' : 'remove'} ${Math.abs(10 - formData.phone.length)} character${Math.abs(10 - formData.phone.length) !== 1 ? 's' : ''} to make it a 10-digit phone number`}
+									{`Please ${formData.phone.length < 10 ? "add" : "remove"} ${Math.abs(10 - formData.phone.length)} character${Math.abs(10 - formData.phone.length) !== 1 ? "s" : ""} to make it a 10-digit phone number`}
 								</p>
 							)}
 					</div>

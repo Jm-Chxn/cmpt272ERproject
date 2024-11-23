@@ -1,20 +1,20 @@
+import { columns } from "@/columns";
+import LeafletMap from "@/components/LeafletMap";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { DataTable } from "./ui/data-table";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
 	DropdownMenuContent,
+	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Plus, Settings2 } from "lucide-react";
-import EmergencyForm from "./EmergencyForm";
-import LeafletMap from "@/components/LeafletMap";
-import { type EmergencyLocation, useLocations } from "../hooks/locations";
 import { useState } from "react";
-import { columns } from "@/columns";
 import { useLocalStorage } from "usehooks-ts";
+import { type EmergencyLocation, useLocations } from "../hooks/locations";
+import EmergencyForm from "./EmergencyForm";
+import { DataTable } from "./ui/data-table";
 
 const EmergencyManagement = () => {
 	const { viewableLocations } = useLocations();
