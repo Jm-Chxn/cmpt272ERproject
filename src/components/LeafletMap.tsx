@@ -96,7 +96,7 @@ const LeafletMap = () => {
               {/* <img src={location.pictureLink} className="w-full aspect-auto" /> */}
 							<div className="text-xl font-bold">{location.location.place}</div>
 							<div
-								className={`text-md font-bold ${location.status === "OPEN" ? "text-green-500" : "text-red-500"}`}
+								className={`text-md font-bold ${location.status !== "OPEN" ? "text-green-500" : "text-red-500"}`}
 							>
 								{location.status}
 							</div>
