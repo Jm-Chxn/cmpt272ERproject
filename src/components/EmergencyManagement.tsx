@@ -46,20 +46,6 @@ const EmergencyManagement = () => {
 						Emergency Reports
 					</CardTitle>
 					<div className="flex justify-end items-center space-x-3">
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button
-									variant="outline"
-									className="flex items-center leading-none"
-								>
-									<Settings2 className="h-8 w-8 text-emerald-500" />
-									View
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end">
-								{/* Empty */}
-							</DropdownMenuContent>
-						</DropdownMenu>
 						<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 							<DialogTrigger asChild>
 								<Button
