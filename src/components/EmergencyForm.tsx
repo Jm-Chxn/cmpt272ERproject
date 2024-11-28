@@ -38,6 +38,8 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 		phone: "",
 		comments: "",
 		imageUrl: "",
+		lat: 49.2827,
+		lng: -123.1207,
 	});
 
     useEffect(() => {
@@ -49,8 +51,12 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
                 phone: "",
                 comments: "",
                 imageUrl: "",
+				lat: 49.2827,
+				lng: -123.1207,
                 
             })
+			setAddress("");
+			setResults([]);
             setPreviewUrl("");
 		    setImageFile(null);
         }
@@ -64,6 +70,10 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 	const [_isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const { addLocation } = useLocations();
+
+	
+    const [address, setAddress] = useState("");
+    const [results, setResults] = useState<any[]>([]);
 
 	const handleInputChange = (field: string, value: string) => {
 		setFormData((prev) => ({
@@ -105,8 +115,8 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 			emergencyType: formData.emergencyType,
 			location: {
 				place: formData.location,
-				lat: 49.2827,
-				lng: -123.1207,
+				lat: formData.lat,
+				lng: formData.lng,
 			},
 			pictureLink: formData.imageUrl || "/api/placeholder/400/300",
 			comment: formData.comments,
@@ -118,6 +128,25 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 		setIsDialogOpen(false);
 		onClose();
 	};
+
+	const addrSearch = () => {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=3&q=${address}`;
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => setResults(data))
+            .catch((error) => console.error("Error fetching address:", error));
+    };
+
+    const chooseAddr = (lat: number, lng: number, display_name: string) => {
+        setFormData((prev) => ({
+            ...prev,
+            location: display_name,
+			lat,
+			lng,
+        }));
+        setAddress(display_name);
+        setResults([]);
+    };
 
 	return (
 		<DialogContent className="h-[90vh] max-h-screen overflow-hidden">
@@ -160,6 +189,36 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 							placeholder="Enter location"
 						/>
 					</div>
+
+					{/* Address Search */}
+					<div className="space-y-2">
+                        <Label htmlFor="address">Address Search</Label>
+                        <div className="flex space-x-2">
+                            <Input
+                                id="address"
+                                type="text"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                placeholder="Search address"
+                            />
+                            <Button type="button" onClick={addrSearch}>
+                                Search
+                            </Button>
+                        </div>
+                        <div id="results">
+                            {results.map((result, index) => (
+                                <div
+                                    key={index}
+                                    className="address cursor-pointer hover:text-red-500"
+                                    onClick={() =>
+                                        chooseAddr(result.lat, result.lon, result.display_name)
+                                    }
+                                >
+                                    {result.display_name}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
 					{/* Name */}
 					<div className="space-y-2">
