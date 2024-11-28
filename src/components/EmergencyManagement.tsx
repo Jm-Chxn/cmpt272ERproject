@@ -56,7 +56,7 @@ const EmergencyManagement = () => {
 									New Report
 								</Button>
 							</DialogTrigger>
-							<EmergencyForm onClose={() => setIsDialogOpen(false)} />
+							<EmergencyForm onClose={() => setIsDialogOpen(false)} isOpen={isDialogOpen}/>
 						</Dialog>
 					</div>
 				</CardHeader>

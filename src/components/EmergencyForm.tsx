@@ -18,13 +18,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { type EmergencyLocation, useLocations } from "@/hooks/locations";
 import { Camera, Upload } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface EmergencyFormProps {
 	onClose: () => void;
+    isOpen: boolean;
 }
 
-const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
+const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 	const validatePhoneNumber = (phone: string) => {
 		const cleaned = phone.replace(/\D/g, "");
 		return cleaned.length;
@@ -38,6 +39,23 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 		comments: "",
 		imageUrl: "",
 	});
+
+    useEffect(() => {
+        if (!isOpen) {
+            setFormData({
+                emergencyType: "",
+                location: "",
+                name: "",
+                phone: "",
+                comments: "",
+                imageUrl: "",
+                
+            })
+            setPreviewUrl("");
+		    setImageFile(null);
+        }
+    }, [isOpen]);
+
 	const [imageUploadMethod, setImageUploadMethod] = useState<"url" | "upload">(
 		"url",
 	);
@@ -98,17 +116,6 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose }) => {
 
 		addLocation(newEmergency);
 		setIsDialogOpen(false);
-		setFormData({
-			emergencyType: "",
-			location: "",
-			name: "",
-			phone: "",
-			comments: "",
-			imageUrl: "",
-		});
-		setPreviewUrl("");
-		setImageFile(null);
-
 		onClose();
 	};
 
