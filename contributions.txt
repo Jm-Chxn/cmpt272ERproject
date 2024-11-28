@@ -3,3 +3,5 @@ Name - Percentage
 Trevor Cho - 20% 
 
 Jim Chen - 20%
+
+Ryan Phan - 20%
