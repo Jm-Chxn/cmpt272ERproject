@@ -193,25 +193,13 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
                     {/* Location */}
                     <div className="space-y-2">
                         <Label htmlFor="location">Location</Label>
-                        <Input
-                            id="location"
-                            type="text"
-                            value={formData.location}
-                            onChange={(e) => handleInputChange("location", e.target.value)}
-                            placeholder="Enter location"
-                        />
-                    </div>
-
-                    {/* Address Search */}
-                    <div className="space-y-2">
-                        <Label htmlFor="address">Address Search</Label>
                         <div className="flex space-x-2">
                             <Input
                                 id="address"
                                 type="text"
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
-                                placeholder="Search address"
+                                placeholder="Search location"
                             />
                             <Button type="button" onClick={addrSearch}>
                                 Search

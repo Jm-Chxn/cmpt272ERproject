@@ -1,27 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { useDarkMode, useTime } from "@/hooks/ui-hooks";
-import { Clock, Moon, Sun, Users } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Clock, Moon, Sun } from "lucide-react";
 
 const DashboardHeader = () => {
 	const { isDarkMode, toggleDarkMode } = useDarkMode();
 	const currentTime = useTime();
-
-	const [activeUsers, emulateActiveUsers] = useState(8);
-
-	useEffect(() => {
-		const interval = setInterval(
-			() => {
-				emulateActiveUsers((prev) => {
-					const change = Math.random() < 0.5 ? -1 : 1;
-					return Math.max(1, prev + change);
-				});
-			},
-			Math.random() * 10000 + 20000,
-		); // Random interval between 20-30 seconds
-
-		return () => clearInterval(interval);
-	}, []);
 
 	return (
 		<div className="flex items-center justify-between">
@@ -32,10 +15,6 @@ const DashboardHeader = () => {
 				<Button variant="secondary">
 					<Clock />
 					{currentTime}
-				</Button>
-				<Button variant="secondary">
-					<Users />
-					Active: {activeUsers}
 				</Button>
 				<Button
 					onClick={() => {
