@@ -147,7 +147,9 @@ export const useLocations = () => {
 
 	const markAsResolved = (id: string) => {
 		const updatedLocations = locations.map((loc) =>
-			loc.id === id ? { ...loc, status: "RESOLVED" as const, resolvedTime: Date.now() } : loc,
+			loc.id === id
+				? { ...loc, status: "RESOLVED" as const, resolvedTime: Date.now() }
+				: loc,
 		);
 		setLocations(updatedLocations);
 	};
@@ -161,8 +163,10 @@ export const useLocations = () => {
 	};
 
 	const getAverageResponseTime = () => {
-		const resolvedLocations = locations.filter((loc) => loc.status === "RESOLVED" && loc.resolvedTime);
-		if(resolvedLocations.length === 0) return 0;
+		const resolvedLocations = locations.filter(
+			(loc) => loc.status === "RESOLVED" && loc.resolvedTime,
+		);
+		if (resolvedLocations.length === 0) return 0;
 
 		const totalResponseTime = resolvedLocations.reduce((total, loc) => {
 			return total + (loc.resolvedTime! - loc.time);

@@ -167,7 +167,7 @@ export const columns: ColumnDef<EmergencyLocation>[] = [
 							location={location}
 							onClose={() => setIsPasswordPromptOpen(false)}
 							isDelete={isDelete}
-                            isOpen={isPasswordPromptOpen}
+							isOpen={isPasswordPromptOpen}
 						/>
 					</Dialog>
 

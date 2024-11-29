@@ -3,7 +3,8 @@ import { AlertTriangle, Heart, Siren, Timer } from "lucide-react";
 import { useLocations } from "../hooks/locations";
 
 const DashboardStats = () => {
-	const { locations, getTodaysEmergenciesCount, getAverageResponseTime } = useLocations();
+	const { locations, getTodaysEmergenciesCount, getAverageResponseTime } =
+		useLocations();
 
 	const openEmergencies = locations.filter(
 		(loc) => loc.status === "OPEN",
@@ -13,13 +14,13 @@ const DashboardStats = () => {
 	).length;
 	const averageResponseTime = getAverageResponseTime();
 
-    const formatDuration = (milliseconds: number) => {
-        const totalSeconds = Math.floor(milliseconds / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-        return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    };
+	const formatDuration = (milliseconds: number) => {
+		const totalSeconds = Math.floor(milliseconds / 1000);
+		const hours = Math.floor(totalSeconds / 3600);
+		const minutes = Math.floor((totalSeconds % 3600) / 60);
+		const seconds = totalSeconds % 60;
+		return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+	};
 
 	return (
 		<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -63,10 +64,11 @@ const DashboardStats = () => {
 					</CardTitle>
 					<Timer className="h-4 w-4 text-blue-500" />
 				</CardHeader>
-				<CardContent className="text-2xl font-bold text-left">                    
+				<CardContent className="text-2xl font-bold text-left">
 					{averageResponseTime > 0
-                        ? formatDuration(averageResponseTime)
-                        : "N/A"}</CardContent>
+						? formatDuration(averageResponseTime)
+						: "N/A"}
+				</CardContent>
 			</Card>
 		</div>
 	);
