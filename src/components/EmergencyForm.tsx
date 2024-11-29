@@ -128,11 +128,19 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 		onClose();
 	};
 
+
 	const addrSearch = () => {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=3&q=${address}`;
+        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=3&countrycodes=ca&q=${address}`;
         fetch(url)
             .then((response) => response.json())
-            .then((data) => setResults(data))
+            .then((data) => data.map((result: any) => ({
+            ...result,
+            display_name: result.display_name
+                .replace(/Canada, /g, "")
+                .replace(/Metro Vancouver Regional District, /g, "")
+                .replace(/British Columbia, /g, ""),
+            })))
+            .then((updatedData) => setResults(updatedData))
             .catch((error) => console.error("Error fetching address:", error));
     };
 
