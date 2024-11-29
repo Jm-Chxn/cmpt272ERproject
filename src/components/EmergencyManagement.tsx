@@ -3,13 +3,8 @@ import LeafletMap from "@/components/LeafletMap";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Plus, Settings2 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { type EmergencyLocation, useLocations } from "../hooks/locations";
