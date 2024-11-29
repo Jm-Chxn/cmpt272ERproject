@@ -23,7 +23,6 @@ import {
 
 import React from "react";
 
-import { DataTableViewOptions } from "./view-options";
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
