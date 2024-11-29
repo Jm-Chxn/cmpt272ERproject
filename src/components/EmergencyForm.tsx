@@ -104,7 +104,7 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (formData.phone.length !== 10 && formData.phone.length != 0) {
+        if (formData.phone.length !== 14 && formData.phone.length != 0) {
             setIsValidPhone(false);
             return;
         }
