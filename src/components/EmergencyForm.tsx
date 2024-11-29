@@ -15,6 +15,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { type EmergencyLocation, useLocations } from "@/hooks/locations";
 import { Camera, Upload } from "lucide-react";
@@ -205,19 +206,21 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
                                 Search
                             </Button>
                         </div>
-                        <div id="results">
+                        {results.length > 0 && (
+                        <Card>
+                        <CardContent className="py-2">
                             {results.map((result, index) => (
-                                <div
-                                    key={index}
-                                    className="address cursor-pointer hover:text-red-500"
-                                    onClick={() =>
-                                        chooseAddr(result.lat, result.lon, result.display_name)
-                                    }
-                                >
-                                    {result.display_name}
-                                </div>
+                            <div
+                                key={index}
+                                className="cursor-pointer py-1 px-2 hover:bg-accent rounded-md text-sm"
+                                onClick={() => chooseAddr(result.lat, result.lon, result.display_name)}
+                            >
+                                {result.display_name}
+                            </div>
                             ))}
-                        </div>
+                        </CardContent>
+                        </Card>
+                    )}
                     </div>
 
                     {/* Name */}
