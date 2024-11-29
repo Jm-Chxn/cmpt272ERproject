@@ -34,6 +34,7 @@ export interface EmergencyLocation {
 	comment: string; //  Additional details, such as "suspect is wearing cargo shorts with green t-shirt"
 	time: number; // unix timestamp of when the report was lodged
 	status: "OPEN" | "RESOLVED"; // Initially set to "OPEN"
+	resolvedTime?: number; // unix timestamp of when the report was resolved, optional
 }
 
 export const formatTime = (unixTime: number): string => {
@@ -146,7 +147,7 @@ export const useLocations = () => {
 
 	const markAsResolved = (id: string) => {
 		const updatedLocations = locations.map((loc) =>
-			loc.id === id ? { ...loc, status: "RESOLVED" as const } : loc,
+			loc.id === id ? { ...loc, status: "RESOLVED" as const, resolvedTime: Date.now() } : loc,
 		);
 		setLocations(updatedLocations);
 	};
@@ -159,6 +160,16 @@ export const useLocations = () => {
 		return locations.filter((loc) => loc.time >= startOfTodayTimestamp).length;
 	};
 
+	const getAverageResponseTime = () => {
+		const resolvedLocations = locations.filter((loc) => loc.status === "RESOLVED" && loc.resolvedTime);
+		if(resolvedLocations.length === 0) return 0;
+
+		const totalResponseTime = resolvedLocations.reduce((total, loc) => {
+			return total + (loc.resolvedTime! - loc.time);
+		}, 0);
+		return totalResponseTime / resolvedLocations.length;
+	};
+
 	return {
 		locations,
 		viewableLocations,
@@ -166,6 +177,7 @@ export const useLocations = () => {
 		addLocation,
 		markAsResolved,
 		getTodaysEmergenciesCount,
+		getAverageResponseTime,
 		setLocations,
 	};
 };

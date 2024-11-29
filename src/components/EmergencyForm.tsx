@@ -53,7 +53,6 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
                 imageUrl: "",
 				lat: 49.2827,
 				lng: -123.1207,
-                
             })
 			setAddress("");
 			setResults([]);
