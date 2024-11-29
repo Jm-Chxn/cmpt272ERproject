@@ -141,9 +141,9 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
             .then((data) => data.map((result: any) => ({
                 ...result,
                 display_name: result.display_name
-                    .replace(/Canada, /g, "")
-                    .replace(/Metro Vancouver Regional District, /g, "")
-                    .replace(/British Columbia, /g, ""),
+                    .replace(/, Canada/g, "")
+                    .replace(/ Metro Vancouver Regional District,/g, "")
+                    .replace(/ British Columbia,/g, ""),
             })))
             .then((updatedData) => setResults(updatedData))
             .catch((error) => console.error("Error fetching address:", error));
