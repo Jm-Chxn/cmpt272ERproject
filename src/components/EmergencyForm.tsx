@@ -55,6 +55,7 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
             setPreviewUrl("");
             setImageFile(null);
             setIsValidPhone(true);
+            setIsValidLocation(true);
         }
     }, [isOpen]);
 
@@ -70,6 +71,7 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
     const [address, setAddress] = useState("");
     const [results, setResults] = useState<any[]>([]);
     const [isValidPhone, setIsValidPhone] = useState(true);
+    const [isValidLocation, setIsValidLocation] = useState(true);
 
     const handleInputChange = (field: string, value: string) => {
         if (field == "phone") {
@@ -105,10 +107,16 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if(formData.location == "") {
+            setIsValidLocation(false);
+            return;
+        }
+
         if (formData.phone.length !== 14 && formData.phone.length != 0) {
             setIsValidPhone(false);
             return;
         }
+
         const currentTime = Date.now();
 
         const newEmergency: EmergencyLocation = {
@@ -136,16 +144,26 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 
 
     const addrSearch = () => {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=3&countrycodes=ca&q=${address}`;
+        setIsValidLocation(true);
+        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=10&countrycodes=ca&q=${address}`;
         fetch(url)
             .then((response) => response.json())
-            .then((data) => data.map((result: any) => ({
-                ...result,
-                display_name: result.display_name
-                    .replace(/, Canada/g, "")
-                    .replace(/ Metro Vancouver Regional District,/g, "")
-                    .replace(/ British Columbia,/g, ""),
-            })))
+            .then((data) => {
+                const filteredLocations = data
+                    .filter((item: any) => {
+                        const lat = parseFloat(item.lat);
+                        const lon = parseFloat(item.lon);
+                        return lat >= 49 && lat <= 59.5 && lon >= -140 && lon <= -115; // limit to only BC
+                    })
+                    .slice(0, 3);
+                return filteredLocations.map((result: any) => ({
+                    ...result,
+                    display_name: result.display_name
+                        .replace(/, Canada/g, "")
+                        .replace(/ Metro Vancouver Regional District,/g, "")
+                        .replace(/, British Columbia/g, ""),
+                }));
+            })
             .then((updatedData) => setResults(updatedData))
             .catch((error) => console.error("Error fetching address:", error));
     };
@@ -201,26 +219,40 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                                 placeholder="Search location"
+                                required
+                                onInvalid={(e) => {
+                                    e.currentTarget.classList.add("border-red-500");
+                                    e.currentTarget.setCustomValidity("Invalid Location");
+                                }}
+                                onInput={(e) => {
+                                    e.currentTarget.classList.remove("border-red-500");
+                                    e.currentTarget.setCustomValidity("");
+                                    setIsValidLocation(true);
+                                }}
+                                className={!isValidLocation ? "border-red-500" : ""}
                             />
                             <Button type="button" onClick={addrSearch}>
                                 Search
                             </Button>
                         </div>
+                        {!isValidLocation && (
+                                <p className="text-sm text-red-500">Invalid Location</p>
+                        )}
                         {results.length > 0 && (
-                        <Card>
-                        <CardContent className="py-2">
-                            {results.map((result, index) => (
-                            <div
-                                key={index}
-                                className="cursor-pointer py-1 px-2 hover:bg-accent rounded-md text-sm"
-                                onClick={() => chooseAddr(result.lat, result.lon, result.display_name)}
-                            >
-                                {result.display_name}
-                            </div>
-                            ))}
-                        </CardContent>
-                        </Card>
-                    )}
+                            <Card>
+                                <CardContent className="py-2">
+                                    {results.map((result, index) => (
+                                        <div
+                                            key={index}
+                                            className="cursor-pointer py-1 px-2 hover:bg-accent rounded-md text-sm"
+                                            onClick={() => chooseAddr(result.lat, result.lon, result.display_name)}
+                                        >
+                                            {result.display_name}
+                                        </div>
+                                    ))}
+                                </CardContent>
+                            </Card>
+                        )}
                     </div>
 
                     {/* Name */}
@@ -343,3 +375,4 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 };
 
 export default EmergencyForm;
+
