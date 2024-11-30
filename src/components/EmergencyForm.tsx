@@ -148,6 +148,12 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 		fetch(url)
 			.then((response) => response.json())
 			.then((data) => {
+				setResults(data);
+                if (data.length === 0) {
+                    setIsValidLocation(false);
+                } else {
+                    setIsValidLocation(true);
+                }
 				const filteredLocations = data
 					.filter((item: any) => {
 						const lat = Number.parseFloat(item.lat);
