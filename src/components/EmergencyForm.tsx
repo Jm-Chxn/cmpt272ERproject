@@ -178,6 +178,13 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 		setResults([]);
 	};
 
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            addrSearch();
+        }
+    };
+
 	return (
 		<DialogContent className="h-[90vh] max-h-screen overflow-hidden">
 			<DialogHeader>
@@ -228,6 +235,7 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 									e.currentTarget.setCustomValidity("");
 									setIsValidLocation(true);
 								}}
+								onKeyDown={handleKeyDown}
 								className={!isValidLocation ? "border-red-500" : ""}
 							/>
 							<Button type="button" onClick={addrSearch}>
