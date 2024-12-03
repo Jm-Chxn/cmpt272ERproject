@@ -6,7 +6,7 @@ The site is viewable at [https://cmpt272.vercel.app](https://cmpt272.vercel.app)
 
 ## Compiled Files
 
-The compiled version of the project can be found in the `/dist` directory.
+The compiled version of the project can be found in the `/dist` directory. Open `index.html` using a server.
 
 ## Installation
 
