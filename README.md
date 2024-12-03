@@ -22,12 +22,14 @@ npm run dev
 # Or, build it with
 npm run build
 
-# and preview with 
+# Or, preview it with 
 npm run preview
 ```
 
 ## Important Notes
- - For markers convenience, we have included a "Add Random" & "Remove Random" button to quickly test the functionality.
+ - Contribution percentages are stored in `contributions.txt`
+
+ - For markers convenience, we have included a "Add Random" & "Remove Random" button to quickly test the functionality
 
  - The password to remove and mark emergencies is: `cmpt272`
 
