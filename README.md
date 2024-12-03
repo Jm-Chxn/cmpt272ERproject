@@ -30,3 +30,5 @@ npm run preview
  - For markers convenience, we have included a "Add Random" & "Remove Random" button to quickly test the functionality.
 
  - The password to remove and mark emergencies is: `cmpt272`
+
+ - To see details, mark as resolved, or delete, click the three dots in the side of the emergency on the table
