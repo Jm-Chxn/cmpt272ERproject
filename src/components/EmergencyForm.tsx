@@ -126,8 +126,8 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
         const newEmergency: EmergencyLocation = {
             id: crypto.randomUUID(),
             witness: {
-                name: formData.name,
-                phoneNumber: formData.phone,
+                name: formData.name ? formData.name : "N/A",
+                phoneNumber: formData.phone ? formData.phone : "N/A",
             },
             emergencyType: formData.emergencyType,
             location: {
@@ -136,7 +136,7 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
                 lng: formData.lng,
             },
             pictureLink: formData.imageUrl || "/api/placeholder/400/300",
-            comment: formData.comments,
+            comment: formData.comments ? formData.comments : "N/A",
             time: currentTime,
             status: "OPEN",
         };
@@ -220,7 +220,8 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
                             <SelectContent>
                                 <SelectItem value="Fire">Fire</SelectItem>
                                 <SelectItem value="Medical">Medical</SelectItem>
-                                <SelectItem value="Shooting">Shooting</SelectItem>
+                                <SelectItem value="Police">Police</SelectItem>
+                                <SelectItem value="Other">Other</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
