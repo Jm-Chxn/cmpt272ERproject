@@ -26,6 +26,16 @@ export const IncidentDetails: React.FC<{ location: EmergencyLocation }> = ({
 					/>
 				</div>
 				<div className="grid gap-4">
+				<div className="flex items-center space-x-4">
+						<User className="w-5 h-5 text-muted-foreground" />
+						<div>
+							<p className="text-sm font-medium">Emergency Type</p>
+							<p className="text-sm text-muted-foreground">
+								{location.emergencyType}
+							</p>
+						</div>
+					</div>
+					<Separator />
 					<div className="flex items-center space-x-4">
 						<MapPin className="w-5 h-5 text-muted-foreground" />
 						<div>

@@ -221,6 +221,7 @@ const EmergencyForm: React.FC<EmergencyFormProps> = ({ onClose, isOpen }) => {
 								<SelectItem value="Fire">Fire</SelectItem>
 								<SelectItem value="Medical">Medical</SelectItem>
 								<SelectItem value="Police">Police</SelectItem>
+								<SelectItem value="Vehicle Accident">Vehicle Accident</SelectItem>
 								<SelectItem value="Other">Other</SelectItem>
 							</SelectContent>
 						</Select>
